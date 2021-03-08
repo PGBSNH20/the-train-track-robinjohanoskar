@@ -1,4 +1,6 @@
 ﻿using System;
+using TrainConsole;
+using TrainEngine;
 
 namespace TrainConsole
 {
@@ -13,6 +15,8 @@ namespace TrainConsole
 
             // Step 2:
             // Make the trains run in treads
+
+            ITrainPlanner newPlanner = new TrainPlanner().StartTrainAt("10:23").StopTrainAt("15:09");
 
         }
     }
