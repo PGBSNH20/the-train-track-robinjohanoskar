@@ -15,7 +15,6 @@ namespace TrainEngine
 	public class TrainPlanner : ITrainPlanner
 	{
 		public int StartTime;
-
 		public int StopTime;
 
 		public ITrainPlanner StartTrainAt(string startTrain)
@@ -26,6 +25,7 @@ namespace TrainEngine
 
             return this;
         }
+
 		public ITrainPlanner StopTrainAt(string stopTrain)
         {
 			int[] time = stopTrain.Split(':').Select(a => int.Parse(a)).ToArray();
@@ -34,6 +34,7 @@ namespace TrainEngine
 
 			return this;
 		}
+
         public ITrainPlanner ToPlan()
         {
 
@@ -42,8 +43,6 @@ namespace TrainEngine
 			return this;
         }
     }
-
-
 
 	class TravelPlan
 	{
