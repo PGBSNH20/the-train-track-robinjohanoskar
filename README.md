@@ -32,10 +32,24 @@ The project is parted into three parts, and the suggestion is to implement the p
 
 Produce a fluent API used by mr Carlos to manually plan the trains, it could maybe look something like this:
 
+#### Old Pseudo:
 ```C#
 var travelPlan1 = new TrainPlaner(train1).FollowSchedule(scheduleTrain1).LevelCrossing().CloseAt("10:23").OpenAt("10:25").SetSwitch(switch1, SwitchDirection.Left).SetSwitch(switch2, SwitchDirection.Right).ToPlan();
 
 var travelPlan2 = new TrainPlaner(train2).StartTrainAt("10:23").StopTrainAt("10:53").ToPlan();
+```
+
+#### New Pseudo:
+```C#
+TrainConsole train1 = new Train("Name of train");
+Station station1 = new Station("Gothenburg");
+Station station2 = new Station("Stockholm");
+
+ITravelPlane travelPlane = new TrainPlanner(train1, station1)
+          .HeadTowards(station2)
+          .StartTrainAt("10:23")
+          .StopTrainAt(station2, "14:53")
+          .GeneratePlan();
 ```
 
 ### Part 2 - Develop an ORM for reading the data
@@ -43,6 +57,11 @@ var travelPlan2 = new TrainPlaner(train2).StartTrainAt("10:23").StopTrainAt("10:
 Create your own mini ORM for the data provided. 
 
 It should also be possible to save and load a travel plan made using the Fluent API.
+
+```C#
+travelPlane.Save("Data/travelplan-train1.txt"); // json
+travelPlane.Load("Data/travelplan-train1.txt"); // json
+```
 
 ### Part 3 - Simulate train track
 
