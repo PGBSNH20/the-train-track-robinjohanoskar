@@ -41,11 +41,11 @@ var travelPlan2 = new TrainPlaner(train2).StartTrainAt("10:23").StopTrainAt("10:
 
 #### New Pseudo:
 ```C#
-TrainConsole train1 = new Train("Name of train");
+Train train1 = new Train("Name of train");
 Station station1 = new Station("Gothenburg");
 Station station2 = new Station("Stockholm");
 
-ITravelPlane travelPlane = new TrainPlanner(train1, station1)
+ITravelPlan travelPlane = new TrainPlanner(train1, station1)
           .HeadTowards(station2)
           .StartTrainAt("10:23")
           .StopTrainAt(station2, "14:53")
