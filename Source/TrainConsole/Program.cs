@@ -19,17 +19,23 @@ namespace TrainConsole
 
             //ITrainPlanner newPlanner = new TrainPlanner().StartTrainAt("10:23").StopTrainAt("15:09").ToPlan();
 
+            FileData scheduleFile = new FileData("timetable.txt", ',');
+
             // New stuff:
             Train train1 = new Train("Name of train");
             Station station1 = new Station("Gothenburg");
             Station station2 = new Station("Stockholm");
+            Schedule schedule1 = new Schedule
+            {
+
+            };
 
             ITravelPlan travelPlan = new TrainPlanner(train1, station1)
                       //.HeadTowards(station2)
+                      .ReadSchedule()
                       .StartTrainAt("10:23", true)
                       .StopTrainAt(station2, "14:53")
                       .GeneratePlan();
-
 
             foreach (Stop s in travelPlan.Stops)
             {

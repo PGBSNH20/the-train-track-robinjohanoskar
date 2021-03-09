@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 using System.Linq;
+using System.IO;
 
 namespace TrainEngine
 {
@@ -10,11 +11,43 @@ namespace TrainEngine
 		ITrainPlanner StartTrainAt(string startTrain, bool DirectionForward);
 		ITrainPlanner StopTrainAt(Station station, string stopTrain);
 		ITravelPlan GeneratePlan();
+		ITrainPlanner ReadSchedule();
+    }
+	
+	public class FileData
+    {
+		public string FileName;
+		public List string[] FileLines;
+
+		public FileData(string filePath, char separator)
+        {
+			string[] lines = File.ReadAllLines(filePath);
+			foreach (string line in lines)
+			{
+				string[] columns = line.Split(separator);
+				FileData
+			}
+    }
+
+	public class Schedule
+    {
+		public int StationID;
+		public string StationName;
+		public int ArrivalTime;
+		public int DepartureTime;
+		public bool DirectionForward;
     }
 
 	public class TrainPlanner : ITrainPlanner
     {
-        private List<Stop> _stops = new List<Stop>();
+		public ITravelPlan ReadSchedule(Schedule)
+        {
+			schedule = new Schedule();
+			File.ReadLines();
+
+        }
+
+		private List<Stop> _stops = new List<Stop>();
 
         public bool DirectionForward = true;
 
@@ -49,6 +82,9 @@ namespace TrainEngine
         {
 			return new TravelPlan(_stops);
         }
+
+		
+		
     }
 
 	public interface ITravelPlan
