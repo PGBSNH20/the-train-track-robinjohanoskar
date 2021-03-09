@@ -13,21 +13,20 @@ namespace TrainEngine
     }
 
 	public class TrainPlanner : ITrainPlanner
-	{
-		private Stop _startsAt;
-		private List<Stop> _stops;
+    {
+        private List<Stop> _stops = new List<Stop>();
 
 		public TrainPlanner(Train train, Station station)
         {
-			_startsAt = new Stop(station);
-		}
+            _stops.Add(new Stop(station));
+        }
 
 		public ITrainPlanner StartTrainAt(string startTrain)
 		{
 			int[] time = startTrain.Split(':').Select(a => int.Parse(a)).ToArray();
 			int startTime = time[0] * 60 + time[1];
 
-			_startsAt.Time = startTime;
+			_stops[0].Time = startTime;
 
             return this;
         }
@@ -44,28 +43,28 @@ namespace TrainEngine
 
         public ITravelPlan GeneratePlan()
         {
-
-            Console.WriteLine(_startsAt.Time + " " + _stops[0].Time);
-
-			return new TravelPlan(_startsAt, _stops);
+			return new TravelPlan(_stops);
         }
     }
 
 	public interface ITravelPlan
-	{
+    {
+        public List<Stop> Stops { get; set; }
 
 	}
 
 	public class TravelPlan : ITravelPlan
-	{
+    {
+        public List<Stop> Stops { get; set; }
+
 		public void Start()
         {
 
         }
 
-		public TravelPlan(Stop start, List<Stop> stops)
+		public TravelPlan(List<Stop> stops)
         {
-
+            Stops = stops;
         }
 	}
 
@@ -102,12 +101,12 @@ namespace TrainEngine
 	public class Station
 	{
 		// private int _id;
-		private string _name;
+		public string Name { get; }
 		// private bool _endStation;
 
 		public Station(string name)
         {
-			_name = name;
+            Name = name;
         }
 	}
 }

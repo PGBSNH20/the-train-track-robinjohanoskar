@@ -30,7 +30,14 @@ namespace TrainConsole
                       .StopTrainAt(station2, "14:53")
                       .GeneratePlan();
 
-            travelPlan.Start();
+            foreach (Stop s in travelPlan.Stops)
+            {
+                Console.WriteLine($"{s.Station.Name} {s.Time}");
+            }
+
+            Console.ReadLine();
+
+            //travelPlan.Start();
         }
     }
 }
