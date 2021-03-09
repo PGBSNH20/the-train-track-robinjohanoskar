@@ -26,9 +26,10 @@ namespace TrainConsole
 
             ITravelPlan travelPlan = new TrainPlanner(train1, station1)
                       //.HeadTowards(station2)
-                      .StartTrainAt("10:23")
+                      .StartTrainAt("10:23", true)
                       .StopTrainAt(station2, "14:53")
                       .GeneratePlan();
+
 
             foreach (Stop s in travelPlan.Stops)
             {

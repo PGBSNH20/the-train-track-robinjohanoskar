@@ -7,7 +7,7 @@ namespace TrainEngine
 {
 	public interface ITrainPlanner
 	{
-		ITrainPlanner StartTrainAt(string startTrain);
+		ITrainPlanner StartTrainAt(string startTrain, bool DirectionForward);
 		ITrainPlanner StopTrainAt(Station station, string stopTrain);
 		ITravelPlan GeneratePlan();
     }
@@ -16,13 +16,17 @@ namespace TrainEngine
     {
         private List<Stop> _stops = new List<Stop>();
 
+        public bool DirectionForward = true;
+
 		public TrainPlanner(Train train, Station station)
         {
             _stops.Add(new Stop(station));
         }
 
-		public ITrainPlanner StartTrainAt(string startTrain)
-		{
+		public ITrainPlanner StartTrainAt(string startTrain, bool directionForward)
+        {
+            DirectionForward = directionForward;
+
 			int[] time = startTrain.Split(':').Select(a => int.Parse(a)).ToArray();
 			int startTime = time[0] * 60 + time[1];
 
