@@ -9,5 +9,10 @@
   <ItemGroup>
     <ProjectReference Include="..\TrainEngine\TrainEngine.csproj" />
   </ItemGroup>
-
+  <ItemGroup>
+    <Content Include="Data\**">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+  </ItemGroup>
 </Project>
+

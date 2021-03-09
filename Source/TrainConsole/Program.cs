@@ -19,7 +19,10 @@ namespace TrainConsole
 
             //ITrainPlanner newPlanner = new TrainPlanner().StartTrainAt("10:23").StopTrainAt("15:09").ToPlan();
 
-            FileData scheduleFile = new FileData("timetable.txt", ',');
+            FileData scheduleFile = new FileData("Data/timetable.txt", ',');
+            //FileData passengerFile = new FileData("passengers.txt", ';');
+            //FileData stationFile = new FileData("stations.txt", '|');
+            //FileData trainFile = new FileData("trains.txt", ',');
 
             // New stuff:
             Train train1 = new Train("Name of train");
@@ -32,7 +35,7 @@ namespace TrainConsole
 
             ITravelPlan travelPlan = new TrainPlanner(train1, station1)
                       //.HeadTowards(station2)
-                      .ReadSchedule()
+                      //.ReadSchedule()
                       .StartTrainAt("10:23", true)
                       .StopTrainAt(station2, "14:53")
                       .GeneratePlan();
@@ -41,6 +44,8 @@ namespace TrainConsole
             {
                 Console.WriteLine($"{s.Station.Name} {s.Time}");
             }
+
+            Console.WriteLine(scheduleFile.FileLines[0][2]);
 
             Console.ReadLine();
 

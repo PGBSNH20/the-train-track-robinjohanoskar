@@ -11,22 +11,23 @@ namespace TrainEngine
 		ITrainPlanner StartTrainAt(string startTrain, bool DirectionForward);
 		ITrainPlanner StopTrainAt(Station station, string stopTrain);
 		ITravelPlan GeneratePlan();
-		ITrainPlanner ReadSchedule();
+		ITrainPlanner ReadSchedule(Schedule schedule);
     }
 	
 	public class FileData
     {
 		public string FileName;
-		public List string[] FileLines;
+		public List<string[]> FileLines { get; } = new List<string[]>();
 
 		public FileData(string filePath, char separator)
-        {
+		{
 			string[] lines = File.ReadAllLines(filePath);
 			foreach (string line in lines)
 			{
-				string[] columns = line.Split(separator);
-				FileData
+				string[] columns = line.Split(separator).Select(a => a.Trim()).ToArray();
+				FileLines.Add(columns);
 			}
+		}
     }
 
 	public class Schedule
@@ -38,13 +39,11 @@ namespace TrainEngine
 		public bool DirectionForward;
     }
 
-	public class TrainPlanner : ITrainPlanner
+	public class TrainPlanner : ITrainPlanner 
     {
-		public ITravelPlan ReadSchedule(Schedule)
+		public ITrainPlanner ReadSchedule(Schedule schedule)
         {
-			schedule = new Schedule();
-			File.ReadLines();
-
+			return this;
         }
 
 		private List<Stop> _stops = new List<Stop>();
