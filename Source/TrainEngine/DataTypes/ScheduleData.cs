@@ -35,13 +35,23 @@ namespace TrainEngine.DataTypes
                 int stationId = int.Parse(columns[1]);
 
                 // Parse the 3rd column to time in seconds.
-                int[] tempDepartureTime = columns[2].Split(':').Select(a => int.Parse(a)).ToArray();
-                int departureTime = tempDepartureTime[0] * 360 + tempDepartureTime[1] * 60;
+                int? departureTime = null;
 
+                if(columns[2] != "null")
+                {
+                    int[] tempDepartureTime = columns[2].Split(':').Select(a => int.Parse(a)).ToArray();
+                    departureTime = tempDepartureTime[0] * 360 + tempDepartureTime[1] * 60;
+                }
+            
                 // Parse the 4th column to time in seconds.
-                int?[] tempArrivalTime = columns[3].Split(':').Select(a => int.Parse(a)??null).ToArray();
-                int? arrivalTime = tempArrivalTime[0] * 360 + tempArrivalTime[1] * 60;
+                int? arrivalTime = null;
 
+                if (columns[3] != "null")
+                {
+                    int[] tempArrivalTime = columns[3].Split(':').Select(a => int.Parse(a)).ToArray();
+                    arrivalTime = tempArrivalTime[0] * 360 + tempArrivalTime[1] * 60;
+                }
+               
                 Stops.Add(new TimetableStop(trainId, stationId, departureTime, arrivalTime));
             }
         }

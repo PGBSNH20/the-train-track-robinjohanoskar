@@ -33,7 +33,6 @@ namespace TrainConsole
                     .GeneratePlan();
             }
 
-
         /* --- Old code --------------------------------------------- */
 
             // Old Stuff:
