@@ -3,13 +3,14 @@ using System.Collections.Generic;
 using System.Text;
 using System.Linq;
 using System.IO;
+using TrainEngine.DataTypes;
 
 namespace TrainEngine
 {
     public interface ITrainPlanner
     {
-        ITrainPlanner StartTrainAt(string startTrain, bool DirectionForward);
-        ITrainPlanner StopTrainAt(Station station, string stopTrain);
+        //ITrainPlanner StartTrainAt(string startTrain, bool DirectionForward);
+        //ITrainPlanner StopTrainAt(Station station, string stopTrain);
         ITravelPlan GeneratePlan();
         ITrainPlanner ReadSchedule(Schedule schedule);
     }
@@ -31,46 +32,7 @@ namespace TrainEngine
         }
     }
 
-    public class ScheduleDataFile
-    {
-        public List<TimetableStop> Stops { get; } = new List<TimetableStop>();
 
-        public ScheduleDataFile(string filePath)
-        {
-            string[] lines = File.ReadAllLines(filePath);
-            foreach (string line in lines)
-            {
-                string[] columns = line.Split(',').Select(a => a.Trim()).ToArray();
-
-                // Parse the first two columns to ints.
-                int trainId = int.Parse(columns[0]);
-                int stationId = int.Parse(columns[1]);
-
-                // Parse the 3rd column to time in seconds.
-                int[] tempDepartureTime = columns[2].Split(':').Select(a => int.Parse(a)).ToArray();
-                int departureTime = tempDepartureTime[0] * 360 + tempDepartureTime[1] * 60;
-
-                // Parse the 4th column to time in seconds.
-                int[] tempArrivalTime = columns[3].Split(':').Select(a => int.Parse(a)).ToArray();
-                int arrivalTime = tempArrivalTime[0] * 360 + tempArrivalTime[1] * 60;
-
-                Stops.Add(new TimetableStop(trainId, stationId, departureTime, arrivalTime));
-            }
-        }
-    }
-
-    public class Schedule
-    {
-        public int TrainId { get; set; }
-        public List<TimetableStop> Stops { get; set; } = new List<TimetableStop>();
-        public bool DirectionForward;
-
-        public Schedule(int trainId, List<TimetableStop> stops)
-        {
-            Stops = stops;
-        }
-
-    }
 
     public class TrainPlanner : ITrainPlanner
     {
@@ -96,27 +58,27 @@ namespace TrainEngine
             return this;
         }
 
-        public ITrainPlanner StartTrainAt(string startTrain, bool directionForward)
-        {
-            DirectionForward = directionForward;
+        //public ITrainPlanner StartTrainAt(string startTrain, bool directionForward)
+        //{
+        //    DirectionForward = directionForward;
 
-            int[] time = startTrain.Split(':').Select(a => int.Parse(a)).ToArray();
-            int startTime = time[0] * 60 + time[1];
+        //    int[] time = startTrain.Split(':').Select(a => int.Parse(a)).ToArray();
+        //    int startTime = time[0] * 60 + time[1];
 
-            _stops[0].Time = startTime;
+        //    _stops[0].Time = startTime;
 
-            return this;
-        }
+        //    return this;
+        //}
 
-        public ITrainPlanner StopTrainAt(Station station, string stopTrain)
-        {
-            int[] time = stopTrain.Split(':').Select(a => int.Parse(a)).ToArray();
-            int stopTime = time[0] * 60 + time[1];
+        //public ITrainPlanner StopTrainAt(Station station, string stopTrain)
+        //{
+        //    int[] time = stopTrain.Split(':').Select(a => int.Parse(a)).ToArray();
+        //    int stopTime = time[0] * 60 + time[1];
 
-            _stops.Add(new Stop(station, stopTime));
+        //    _stops.Add(new Stop(station, stopTime));
 
-            return this;
-        }
+        //    return this;
+        //}
 
         public ITravelPlan GeneratePlan()
         {
@@ -126,20 +88,20 @@ namespace TrainEngine
 
     public interface ITravelPlan
     {
-        public List<Stop> Stops { get; set; }
+        public List<TimetableStop> Stops { get; set; }
 
     }
 
     public class TravelPlan : ITravelPlan
     {
-        public List<Stop> Stops { get; set; }
+        public List<TimetableStop> Stops { get; set; }
 
         public void Start()
         {
 
         }
 
-        public TravelPlan(List<Stop> stops)
+        public TravelPlan(List<TimetableStop> stops)
         {
             Stops = stops;
         }
@@ -175,22 +137,6 @@ namespace TrainEngine
             StationId = stationId;
             DepartureTime = departureTime;
             ArrivalTime = arrivalTime;
-        }
-    }
-
-    public class Train
-    {
-        public int Id;
-        public string Name;
-        public int MaxSpeed;
-        public bool Operated;
-
-        public Train(int id, string name, int maxSpeed, bool operated)
-        {
-            Id = id;
-            Name = name;
-            MaxSpeed = maxSpeed;
-            Operated = operated;
         }
     }
 

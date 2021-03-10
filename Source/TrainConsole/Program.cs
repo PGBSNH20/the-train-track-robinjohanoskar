@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using TrainConsole;
 using TrainEngine;
+using TrainEngine.DataTypes;
 
 namespace TrainConsole
 {
@@ -10,52 +11,30 @@ namespace TrainConsole
     {
         static void Main(string[] args)
         {
-            ScheduleDataFile scheduleFile = new ScheduleDataFile("Data/timetable.txt");
+            ScheduleData scheduleFile = new ScheduleData("Data/timetable.txt");
             FileData passengerFile = new FileData("Data/passengers.txt", ';');
             FileData stationFile = new FileData("Data/stations.txt", '|');
-            FileData trainFile = new FileData("Data/trains.txt", ',');
+            TrainData trainFile = new TrainData("Data/trains.txt");
 
-            if (trainFile.FileLines.Count > 1)
+            foreach (Train train in trainFile.Trains)
             {
-                for (int y = 1; y < trainFile.FileLines.Count; y++)
-                {
-                    string[] trainData = trainFile.FileLines[y];
-                    int id;
-                    int maxSpeed;
-                    bool operated;
+                // Create the schedule for the train "newTrain".
+                List<TimetableStop> scheduleStops = scheduleFile.Stops.Where(stop => stop.TrainId == train.Id).ToList();
+                Schedule newSchedule = new Schedule(train.Id, scheduleStops);
 
-                    // Note: Should we move the code below which parses the train rows, to its own class (i.e. "TrainsDataFile")? Like we do with the "Data/timetable.txt" file in the "ScheduleDataFile"-class?
-                    try
-                    {
-                        id = int.Parse(trainData[0]);
-                        maxSpeed = int.Parse(trainData[2]);
-                        operated = bool.Parse(trainData[3]);
-
-                        Train newTrain = new Train(id, trainData[1], maxSpeed, operated);
-
-                        // Create the schedule for the train "newTrain".
-                        List<TimetableStop> scheduleStops = scheduleFile.Stops.Where(stop => stop.TrainId == newTrain.Id).ToList();
-                        Schedule newSchedule = new Schedule(newTrain.Id, scheduleStops);
-
-                        // Create the travel plan for the train "newTrain".
-                        ITravelPlan travelPlan3 = new TrainPlanner(newTrain)
-                                .ReadSchedule(newSchedule)
-                                //.LevelCrossing()
-                                //.CloseAt("10:23")
-                                //.OpenAt("10:25")
-                                //.SetSwitch(switch1, SwitchDirection.Left)
-                                //.SetSwitch(switch2, SwitchDirection.Right)
-                                .GeneratePlan();
-                    }
-                    catch (Exception e)
-                    {
-                        Console.WriteLine(e.Message);
-                    }
-                }
+                // Create the travel plan for the train "newTrain".
+                ITravelPlan newPlan = new TrainPlanner(train)
+                    .ReadSchedule(newSchedule)
+                    //.LevelCrossing()
+                    //.CloseAt("10:23")
+                    //.OpenAt("10:25")
+                    //.SetSwitch(switch1, SwitchDirection.Left)
+                    //.SetSwitch(switch2, SwitchDirection.Right)
+                    .GeneratePlan();
             }
 
 
-            /* --- Old code --------------------------------------------- */
+        /* --- Old code --------------------------------------------- */
 
             // Old Stuff:
             //Console.WriteLine("Train track!");
