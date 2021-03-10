@@ -12,9 +12,9 @@ namespace TrainConsole
         static void Main(string[] args)
         {
             ScheduleData scheduleFile = new ScheduleData("Data/timetable.txt");
-            FileData passengerFile = new FileData("Data/passengers.txt", ';');
-            FileData stationFile = new FileData("Data/stations.txt", '|');
             TrainData trainFile = new TrainData("Data/trains.txt");
+            //FileData passengerFile = new FileData("Data/passengers.txt", ';');
+            //FileData stationFile = new FileData("Data/stations.txt", '|');
 
             foreach (Train train in trainFile.Trains)
             {
@@ -32,6 +32,9 @@ namespace TrainConsole
                     //.SetSwitch(switch2, SwitchDirection.Right)
                     .GeneratePlan();
             }
+
+            FakeTime fakeTime = new FakeTime(0, 0);
+            fakeTime.StartTime();
 
         /* --- Old code --------------------------------------------- */
 
