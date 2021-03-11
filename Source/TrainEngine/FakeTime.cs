@@ -41,7 +41,7 @@ namespace TrainEngine
                 Hours = 0;
                 Minutes = 0;
             }
-            Console.WriteLine(Hours.ToString().PadLeft(2, '0') + ":" + Minutes.ToString().PadLeft(2, '0'));
+            //Console.WriteLine(Hours.ToString().PadLeft(2, '0') + ":" + Minutes.ToString().PadLeft(2, '0'));
             Tick();
         }
     }

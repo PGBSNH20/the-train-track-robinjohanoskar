@@ -57,8 +57,8 @@ namespace TrainEngine.DataTypes
                 {
                     try
                     {
-                        int[] tempArrivalTime = columns[2].Split(':').Select(a => int.Parse(a)).ToArray();
-                        departureTime = new FakeTime(tempArrivalTime[0], tempArrivalTime[1]);
+                        int[] tempArrivalTime = columns[3].Split(':').Select(a => int.Parse(a)).ToArray();
+                        arrivalTime = new FakeTime(tempArrivalTime[0], tempArrivalTime[1]);
                     }
                     catch (System.Exception)
                     {
