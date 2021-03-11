@@ -9,23 +9,27 @@ namespace TrainEngine
 {
     public class FakeTime
     {
+        public int TickInterval { get; set; }
         public int Hours { get; set; }
         public int Minutes { get; set; }
-
         public Thread TimeThread { get; set; }
+
         public FakeTime(int h, int m)
         {
+            TickInterval = 100;
             Hours = h;
             Minutes = m;
         }
+
         public void StartTime()
         {
             TimeThread = new Thread(Tick);
             TimeThread.Start();
         }
+
         public void Tick()
         {
-            Thread.Sleep(1000);
+            Thread.Sleep(TickInterval);
             Minutes++;
             if (Minutes == 60)
             {

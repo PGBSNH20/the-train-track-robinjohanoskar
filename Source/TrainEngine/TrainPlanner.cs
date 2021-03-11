@@ -15,9 +15,9 @@ namespace TrainEngine
 
     public class TrainPlanner : ITrainPlanner
     {
+        private Train _train;
         //private List<Stop> _stops = new List<Stop>();
         private List<TimetableStop> _stops = new List<TimetableStop>();
-        private Train _train;
         public bool DirectionForward = true;
 
         //public TrainPlanner(Train train, Station station)
@@ -38,7 +38,7 @@ namespace TrainEngine
 
         public ITravelPlan GeneratePlan()
         {
-            return new TravelPlan(_stops);
+            return new TravelPlan(_train, _stops);
         }
 
         //public ITrainPlanner StartTrainAt(string startTrain, bool directionForward)

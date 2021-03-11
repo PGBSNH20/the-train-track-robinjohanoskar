@@ -16,6 +16,8 @@ namespace TrainConsole
             //FileData passengerFile = new FileData("Data/passengers.txt", ';');
             //FileData stationFile = new FileData("Data/stations.txt", '|');
 
+            List<ITravelPlan> travelPlans = new List<ITravelPlan>();
+
             foreach (Train train in trainFile.Trains)
             {
                 // Create the schedule for the train "newTrain".
@@ -23,7 +25,7 @@ namespace TrainConsole
                 Schedule newSchedule = new Schedule(train.Id, scheduleStops);
 
                 // Create the travel plan for the train "newTrain".
-                ITravelPlan newPlan = new TrainPlanner(train)
+                ITravelPlan travelPlan = new TrainPlanner(train)
                     .ReadSchedule(newSchedule)
                     //.LevelCrossing()
                     //.CloseAt("10:23")
@@ -31,9 +33,18 @@ namespace TrainConsole
                     //.SetSwitch(switch1, SwitchDirection.Left)
                     //.SetSwitch(switch2, SwitchDirection.Right)
                     .GeneratePlan();
+
+                // Save "travelPlan" to a list:
+                travelPlans.Add(travelPlan);
             }
 
-            FakeTime fakeTime = new FakeTime(0, 0);
+            FakeTime fakeTime = new FakeTime(10, 0);
+
+            foreach (var travelPlan in travelPlans)
+            {
+                travelPlan.Simulate(fakeTime);
+            }
+
             fakeTime.StartTime();
 
         /* --- Old code --------------------------------------------- */

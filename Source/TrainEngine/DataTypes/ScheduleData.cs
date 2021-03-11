@@ -34,22 +34,36 @@ namespace TrainEngine.DataTypes
                 int trainId = int.Parse(columns[0]);
                 int stationId = int.Parse(columns[1]);
 
-                // Parse the 3rd column to time in seconds.
-                int? departureTime = null;
+                // Parse the 3rd column to a FakeTime object.
+                FakeTime departureTime = null;
 
-                if(columns[2] != "null")
+                if (columns[2] != "null")
                 {
-                    int[] tempDepartureTime = columns[2].Split(':').Select(a => int.Parse(a)).ToArray();
-                    departureTime = tempDepartureTime[0] * 360 + tempDepartureTime[1] * 60;
+                    try
+                    {
+                        int[] tempDepartureTime = columns[2].Split(':').Select(a => int.Parse(a)).ToArray();
+                        departureTime = new FakeTime(tempDepartureTime[0], tempDepartureTime[1]);
+                    }
+                    catch (System.Exception)
+                    {
+                        // todo: maybe throw
+                    }
                 }
             
-                // Parse the 4th column to time in seconds.
-                int? arrivalTime = null;
+                // Parse the 4th column to a FakeTime object.
+                FakeTime arrivalTime = null;
 
                 if (columns[3] != "null")
                 {
-                    int[] tempArrivalTime = columns[3].Split(':').Select(a => int.Parse(a)).ToArray();
-                    arrivalTime = tempArrivalTime[0] * 360 + tempArrivalTime[1] * 60;
+                    try
+                    {
+                        int[] tempArrivalTime = columns[2].Split(':').Select(a => int.Parse(a)).ToArray();
+                        departureTime = new FakeTime(tempArrivalTime[0], tempArrivalTime[1]);
+                    }
+                    catch (System.Exception)
+                    {
+                        // todo: maybe throw
+                    }
                 }
                
                 Stops.Add(new TimetableStop(trainId, stationId, departureTime, arrivalTime));
