@@ -1,0 +1,28 @@
+
+interface ITrainPlanner
+class TrainPlanner()
+    .LoadTravelPlan()
+    .SaveTravelPlan()
+    .SetTrain() // or pass a train into the constructor
+    .AddStop(stopId, name, time)
+    .RemoveStop(stopId)
+    .CloseBar("10:23")
+    .OpenBar("10:25")
+    .SetSwitch(switch1, SwitchDirection.Left)
+    .SetSwitch(switch2, SwitchDirection.Right)
+    .GeneratePlan()
+
+interface ITravelPlan
+class TravelPlan
+    train
+    list of stops
+
+FakeTime/WorldTime
+
+Train
+    Start
+        Tick once per second:
+            check timetable against FakeTime/WorldTime
+                print a status message when there's a match (FakeTime == arrivalTime/departureTime//LevelCrossing)
+
+

@@ -138,8 +138,8 @@ This is some suggestions on how you can get started on this project:
 2. Start be creating a very basic fluent API which can create a TravelPlan, eg: `new TravelPlan().StartAt("station1", "10:30").ArriveAt("station2","12:30").GeneratePlan()`
    * Remember unit tests
 3. Create ORM for reading the three files:
-   * stations.txt
-   * trains.txt
+   * ~~stations.txt~~
+   * ~~trains.txt~~
    * traintrack1.txt
    * Remember unit tests
 4. Implement possibility to read and save the TravelPlan
@@ -151,7 +151,7 @@ This is some suggestions on how you can get started on this project:
    * Takes one or more trains as input
    * Takes can control the level crossing (to open or close)
    * Remember unit tests
-7. Implement a fake time, so that the simulation will not run for hours, it could be a class called `Clock`
+7. ~~Implement a fake time, so that the simulation will not run for hours, it could be a class called `Clock`~~
 8. Implement a thread on one train so that the simulation of the TravelPlan following the time table can be simulated
 9. See that everything works (with one train)
 10. Go to advanced level: 
