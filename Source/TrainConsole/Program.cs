@@ -15,6 +15,14 @@ namespace TrainConsole
             TrainData trainFile = new TrainData("Data/trains.txt");
             //FileData passengerFile = new FileData("Data/passengers.txt", ';');
             //FileData stationFile = new FileData("Data/stations.txt", '|');
+            Track newTrack = new Track("Data/traintrack2.txt");
+
+            newTrack.ReadTrack();
+
+            foreach (string s in newTrack.TrackOrder)
+            {
+                Console.WriteLine(s);
+            }
 
             List<ITravelPlan> travelPlans = new List<ITravelPlan>();
 
