@@ -8,8 +8,6 @@ namespace TrainEngine.DataTypes
     {
         public string[] FileLines { get; set; }
 
-        public List<string> TrackOrder { get; set; } = new List<string>();
-
         public StationORM Station { get; }
 
         public Track(string trackPath, StationORM station)
@@ -32,16 +30,14 @@ namespace TrainEngine.DataTypes
                         {
                             if(s.ID == 1)
                             {
-                                TrackOrder.Add("Station1");
                                 SearchNext(yLine, xChar);
-
                             }
                         }
                     }
                 }
             }
         }
-
+        
         public void SearchNext(int y, int x)
         {
             //char c = TrackMap[y][x];
@@ -52,11 +48,17 @@ namespace TrainEngine.DataTypes
 
                 if (Char.IsDigit(nextChar))
                 {
-                    TrackOrder.Add($"Station {nextChar}");
+                    Station.Stations.Find(a => a.ID == int.Parse(nextChar.ToString())).Distance = distance;
+                    //TrackOrder.Add($"Station {nextChar}");
+                    distance = 0;
+                }
+                else if (nextChar == '-')
+                {
+                    distance++;
                 }
                 else if (nextChar == '=')
                 {
-                    TrackOrder.Add("Crossing");
+                    distance++;
                 }
             }
         }

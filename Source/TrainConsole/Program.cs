@@ -19,11 +19,6 @@ namespace TrainConsole
 
             newTrack.ReadTrack();
 
-            foreach (string s in newTrack.TrackOrder)
-            {
-                Console.WriteLine(s);
-            }
-
             List<ITravelPlan> travelPlans = new List<ITravelPlan>();
 
             foreach (Train train in trainFile.Trains)

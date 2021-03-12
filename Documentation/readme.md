@@ -3,7 +3,22 @@ What we have done can be explained by this mindmap.
 ![Mindmap of train track](mindmap.jpg)
 Bla bla bla bla
 
-# 2021-03-08 14:00
+
+
+Saker vi har kvar att göra:
+1. Dokumentation
+2. Räkna ut hur långt varje tåg har kommit vid varje Tick()
+3. Kolla distansen från stationen tåget är på jämfört emot distansen på nästa station och isåfall stanna tåget om den har åkt förbi
+4. Passagerare?
+5. Spara travelplan
+6. Spara ORMobjekt
+7. Ladda travelplan
+8. Unit tests
+9. level crossing?
+
+
+
+
 ![Level crossing with bars](crossing.png)
 
 var travelPlan1 = new TrainPlaner(train1).FollowSchedule(scheduleTrain1).LevelCrossing().CloseAt("10:23").OpenAt("10:25").SetSwitch(switch1, SwitchDirection.Left).SetSwitch(switch2, SwitchDirection.Right).ToPlan();

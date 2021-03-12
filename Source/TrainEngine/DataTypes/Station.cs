@@ -35,7 +35,7 @@ namespace TrainEngine.DataTypes
 
         public StationORM(string filePath)
         {
-            string[] lines = File.ReadAllLines(filePath);
+            string[] lines = File.ReadAllLines(filePath).Skip(1).ToArray();
             foreach (string line in lines)
             {
                 string[] columns = line.Split('|').Select(a => a.Trim()).ToArray();

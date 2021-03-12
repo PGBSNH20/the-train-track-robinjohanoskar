@@ -10,15 +10,17 @@ namespace TrainEngine.DataTypes
     {
         public int Id;
         public string Name;
-        public int MaxSpeed;
+        public int Speed;
         public bool Operated;
+        public bool IsRunning;
 
-        public Train(int id, string name, int maxSpeed, bool operated)
+        public Train(int id, string name, int speed, bool operated)
         {
             Id = id;
             Name = name;
-            MaxSpeed = maxSpeed;
+            Speed = speed;
             Operated = operated;
+            IsRunning = false;
         }
     }
 
@@ -35,10 +37,10 @@ namespace TrainEngine.DataTypes
                 try
                 {
                     int id = int.Parse(columns[0]);
-                    int maxSpeed = int.Parse(columns[2]);
+                    int speed = int.Parse(columns[2]);
                     bool operated = bool.Parse(columns[3]);
 
-                    Train newTrain = new Train(id, columns[1], maxSpeed, operated);
+                    Train newTrain = new Train(id, columns[1], speed, operated);
 
                     Trains.Add(newTrain);
                 }

@@ -35,10 +35,11 @@ namespace TrainEngine
             _travelPlanThread.Start();
         }
         
+
         public void Tick()
         {
             Thread.Sleep(_fakeTime.TickInterval / 2); // half of FakeTime's sleep
-
+            
             // pseudo-code:
             // alternative solution:
             // if (Events[0].time >= _fakeTime)
@@ -53,6 +54,11 @@ namespace TrainEngine
                     stop.HasDeparted = true;
                     Console.WriteLine($"{Train.Name} has departed {stop.StationId} at {_fakeTime.Hours.ToString().PadLeft(2, '0')}:{_fakeTime.Minutes.ToString().PadLeft(2, '0')}");
                 }
+
+                //if (int distance = Train.Speed * )
+
+
+
 
                 // todo: operator overloading?
                 if (!stop.HasArrived && stop.ArrivalTime != null && stop.ArrivalTime.Hours == _fakeTime.Hours && stop.ArrivalTime.Minutes == _fakeTime.Minutes) {
