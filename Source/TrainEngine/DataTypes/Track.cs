@@ -8,7 +8,7 @@ namespace TrainEngine.DataTypes
     {
         public string[] FileLines { get; set; }
 
-        //public List<string> TrackOrder { get; set; } = new List<string>();
+        public List<string> TrackOrder { get; set; } = new List<string>();
 
         public StationORM Station { get; }
 
@@ -19,7 +19,6 @@ namespace TrainEngine.DataTypes
         }
 
         int distance = 0;
-
 
         public void ReadTrack()
         {
@@ -33,9 +32,9 @@ namespace TrainEngine.DataTypes
                         {
                             if(s.ID == 1)
                             {
-
                                 TrackOrder.Add("Station1");
                                 SearchNext(yLine, xChar);
+
                             }
                         }
                     }
