@@ -14,8 +14,8 @@ namespace TrainConsole
             ScheduleData scheduleFile = new ScheduleData("Data/timetable.txt");
             TrainData trainFile = new TrainData("Data/trains.txt");
             //FileData passengerFile = new FileData("Data/passengers.txt", ';');
-            //FileData stationFile = new FileData("Data/stations.txt", '|');
-            Track newTrack = new Track("Data/traintrack2.txt");
+            StationORM stationFile = new StationORM("Data/stations.txt");
+            Track newTrack = new Track("Data/traintrack2.txt", stationFile);
 
             newTrack.ReadTrack();
 

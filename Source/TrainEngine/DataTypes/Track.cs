@@ -1,33 +1,44 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.IO;
-using System.Security.Cryptography.X509Certificates;
 
 namespace TrainEngine.DataTypes
 {
     public class Track
     {
-        public string[] TrackMap { get; set; }
+        public string[] FileLines { get; set; }
 
-        public List<string> TrackOrder { get; set; } = new List<string>();
+        //public List<string> TrackOrder { get; set; } = new List<string>();
 
-        public Track(string filePath)
+        public StationORM Station { get; }
+
+        public Track(string trackPath, StationORM station)
         {
-            TrackMap = File.ReadAllLines(filePath);
+            FileLines = File.ReadAllLines(trackPath);
+            Station = station;
         }
+
+        int distance = 0;
+
 
         public void ReadTrack()
         {
-            for (int yLine = 0; yLine < TrackMap.Length; yLine++)
+            for (int yLine = 0; yLine < FileLines.Length; yLine++)
             {
-                for (int xChar = 0; xChar < TrackMap[yLine].Length; xChar++)
+                for (int xChar = 0; xChar < FileLines[yLine].Length; xChar++)
                 {
-                    if (TrackMap[yLine][xChar] == '1')
+                    if (FileLines[yLine][xChar] == '1')
                     {
-                        TrackOrder.Add("Station1");
-                        SearchNext(yLine, xChar);
-                    }
+                        foreach(Station s in Station.Stations)
+                        {
+                            if(s.ID == 1)
+                            {
 
+                                TrackOrder.Add("Station1");
+                                SearchNext(yLine, xChar);
+                            }
+                        }
+                    }
                 }
             }
         }
@@ -36,9 +47,9 @@ namespace TrainEngine.DataTypes
         {
             //char c = TrackMap[y][x];
 
-            for (x += 1; x < TrackMap[y].Length; x++)
+            for (x += 1; x < FileLines[y].Length; x++)
             {
-                char nextChar = TrackMap[y][x];
+                char nextChar = FileLines[y][x];
 
                 if (Char.IsDigit(nextChar))
                 {
