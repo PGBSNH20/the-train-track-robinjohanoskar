@@ -41,7 +41,7 @@ namespace TrainConsole
                 travelPlans.Add(travelPlan);
             }
 
-            FakeTime fakeTime = new FakeTime(10, 0);
+            FakeTime fakeTime = new FakeTime(10, 20);
 
             foreach (var travelPlan in travelPlans)
             {

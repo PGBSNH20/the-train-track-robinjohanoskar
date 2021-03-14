@@ -13,12 +13,14 @@ namespace TrainEngine
         public int Hours { get; set; }
         public int Minutes { get; set; }
         public Thread TimeThread { get; set; }
+        public static int MinutesSinceStart;
 
         public FakeTime(int h, int m)
         {
             TickInterval = 100;
             Hours = h;
             Minutes = m;
+
         }
 
         public void StartTime()
@@ -29,8 +31,11 @@ namespace TrainEngine
 
         public void Tick()
         {
+             // Detta funkar om vi får klockan att starta när tåget börjar åka..
+
             Thread.Sleep(TickInterval);
             Minutes++;
+            MinutesSinceStart++;
             if (Minutes == 60)
             {
                 Hours++;
@@ -41,7 +46,7 @@ namespace TrainEngine
                 Hours = 0;
                 Minutes = 0;
             }
-            //Console.WriteLine(Hours.ToString().PadLeft(2, '0') + ":" + Minutes.ToString().PadLeft(2, '0'));
+            Console.WriteLine(Hours.ToString().PadLeft(2, '0') + ":" + Minutes.ToString().PadLeft(2, '0'));
             Tick();
         }
     }

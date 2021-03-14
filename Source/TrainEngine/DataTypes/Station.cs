@@ -26,12 +26,11 @@ namespace TrainEngine.DataTypes
 
         }
     }
-
     public class StationORM
     {
         public string FileName;
 
-        public List<Station> Stations { get; } = new List<Station>();
+        public static List<Station> Stations { get; } = new List<Station>();
 
         public StationORM(string filePath)
         {

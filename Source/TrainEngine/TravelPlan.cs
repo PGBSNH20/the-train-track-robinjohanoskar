@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Threading;
 using TrainEngine.DataTypes;
 
@@ -24,6 +25,7 @@ namespace TrainEngine
 
         public TravelPlan(Train train, List<TimetableStop> stops)
         {
+
             Train = train;
             Stops = stops;
         }
@@ -34,12 +36,9 @@ namespace TrainEngine
             _travelPlanThread = new Thread(Tick);
             _travelPlanThread.Start();
         }
-        
-
         public void Tick()
         {
             Thread.Sleep(_fakeTime.TickInterval / 2); // half of FakeTime's sleep
-            
             // pseudo-code:
             // alternative solution:
             // if (Events[0].time >= _fakeTime)
@@ -48,17 +47,13 @@ namespace TrainEngine
 
             foreach (TimetableStop stop in Stops)
             {
-
                 // todo: operator overloading?
                 if (!stop.HasDeparted && stop.DepartureTime != null && stop.DepartureTime.Hours == _fakeTime.Hours && stop.DepartureTime.Minutes == _fakeTime.Minutes) {
                     stop.HasDeparted = true;
-                    Console.WriteLine($"{Train.Name} has departed {stop.StationId} at {_fakeTime.Hours.ToString().PadLeft(2, '0')}:{_fakeTime.Minutes.ToString().PadLeft(2, '0')}");
+                    Console.WriteLine($"{Train.Name} has departed {StationORM.Stations.Find(a => a.ID == stop.StationId).Name} at {_fakeTime.Hours.ToString().PadLeft(2, '0')}:{_fakeTime.Minutes.ToString().PadLeft(2, '0')}");
+                    Console.WriteLine(FakeTime.MinutesSinceStart + " minutes since start"); // testing
                 }
-
                 //if (int distance = Train.Speed * )
-
-
-
 
                 // todo: operator overloading?
                 if (!stop.HasArrived && stop.ArrivalTime != null && stop.ArrivalTime.Hours == _fakeTime.Hours && stop.ArrivalTime.Minutes == _fakeTime.Minutes) {

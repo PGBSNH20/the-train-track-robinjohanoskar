@@ -26,7 +26,7 @@ namespace TrainEngine.DataTypes
                 {
                     if (FileLines[yLine][xChar] == '1')
                     {
-                        foreach(Station s in Station.Stations)
+                        foreach(Station s in StationORM.Stations)
                         {
                             if(s.ID == 1)
                             {
@@ -48,7 +48,7 @@ namespace TrainEngine.DataTypes
 
                 if (Char.IsDigit(nextChar))
                 {
-                    Station.Stations.Find(a => a.ID == int.Parse(nextChar.ToString())).Distance = distance;
+                    StationORM.Stations.Find(a => a.ID == int.Parse(nextChar.ToString())).Distance = distance;
                     //TrackOrder.Add($"Station {nextChar}");
                     distance = 0;
                 }
