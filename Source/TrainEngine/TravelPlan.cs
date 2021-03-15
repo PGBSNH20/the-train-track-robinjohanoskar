@@ -4,7 +4,7 @@ using System.IO;
 using System.Linq;
 using System.Threading;
 using TrainEngine.DataTypes;
-using System.Text.Json;
+using Newtonsoft.Json;
 
 namespace TrainEngine
 {
@@ -107,11 +107,11 @@ namespace TrainEngine
 
         public void SavePlan()
         {
-            TravelPlanJson newJson = new TravelPlanJson(StationORM.Stations);
-            //string json = JsonSerializer.Serialize(newJson, typeof(TravelPlanJson));
+            TravelPlanJson jsonTravelplan = new TravelPlanJson(StationORM.Stations, this.Train);
 
-            File.WriteAllText(@"C:\Temp\travelplan.json", newJson.Stations);
+            string json = JsonConvert.SerializeObject(jsonTravelplan);
 
+            File.WriteAllText(@"C:\Temp\travelplan.json", json);
         }
     }
 }

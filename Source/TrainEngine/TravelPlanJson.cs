@@ -1,18 +1,23 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
-using System.Text.Json;
 using TrainEngine.DataTypes;
+using Newtonsoft.Json;
+using System.IO;
 
 namespace TrainEngine
 {
     class TravelPlanJson
     {
-        public string Stations { get; set; }
+        public IList<Station> Stations { get; set; }
 
-        public TravelPlanJson(List<Station> stations)
+        public Train Train { get; set; }
+
+        public TravelPlanJson(List<Station> stations, Train train)
         {
-            Stations = JsonSerializer.Serialize(stations, typeof(List<Station>));
+            Stations = stations;
+
+            Train = train;
         }
     }
 }
