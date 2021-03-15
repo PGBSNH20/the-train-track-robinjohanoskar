@@ -44,6 +44,8 @@ namespace TrainConsole
                     //.SetSwitch(switch1, SwitchDirection.Left)
                     //.SetSwitch(switch2, SwitchDirection.Right)
                     .GeneratePlan();
+                    
+                travelPlan.SavePlan();
 
                 // Save "travelPlan" to a list:
                 travelPlans.Add(travelPlan);

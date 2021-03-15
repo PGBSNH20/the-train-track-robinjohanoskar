@@ -1,8 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Threading;
 using TrainEngine.DataTypes;
+using System.Text.Json;
 
 namespace TrainEngine
 {
@@ -11,6 +13,8 @@ namespace TrainEngine
         Train Train { get; }
         List<TimetableStop> Stops { get; set; }
         void Simulate(FakeTime fakeTime);
+
+        void SavePlan();
     }
 
     public class TravelPlan : ITravelPlan
@@ -99,6 +103,15 @@ namespace TrainEngine
             }
 
             Tick();
+        }
+
+        public void SavePlan()
+        {
+            TravelPlanJson newJson = new TravelPlanJson(StationORM.Stations);
+            //string json = JsonSerializer.Serialize(newJson, typeof(TravelPlanJson));
+
+            File.WriteAllText(@"C:\Temp\travelplan.json", newJson.Stations);
+
         }
     }
 }
