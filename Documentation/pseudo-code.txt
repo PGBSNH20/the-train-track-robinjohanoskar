@@ -26,3 +26,43 @@ Train
                 print a status message when there's a match (FakeTime == arrivalTime/departureTime//LevelCrossing)
 
 
+public coordinate TrainPosition (x, y)
+public char LastSymbol
+
+public bool AtStation = false
+public bool BomOpen = true
+
+
+klockan tickar 1 minut:
+	if(AtStation == false){
+
+	ReadTrack()
+	{
+		//Flyttar fram tåget 1 steg
+	}
+
+	if( om nästa char == '-')
+	{
+		//Ingenting
+	}
+	
+	if( om nästa, nästa char == '=')
+	{
+		BomOpen = false;
+		
+	}
+
+	if(LastSymbol == '=')
+	{
+		BomOpen = true;
+	}
+
+
+
+
+klockan tickar 1 minut:
+	ReadTrack()
+	{
+		//Flyttar fram tåget 1 steg
+	}
+

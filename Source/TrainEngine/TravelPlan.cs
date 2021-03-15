@@ -57,6 +57,7 @@ namespace TrainEngine
                     stop.HasDeparted = true;
                     Console.ForegroundColor = Train.Color;
                     Console.WriteLine($"{_fakeTime.GetFormattedTimeString()} - {Train.Name} has departed {stationName}");
+                    Console.ForegroundColor = ConsoleColor.White;
                     //Console.WriteLine(FakeTime.MinutesSinceStart + " minutes since start"); // testing
                     _minutesSinceLastDeparture = FakeTime.MinutesSinceStart;
                     //_nextStationID = stop.StationId + 1;
@@ -69,17 +70,19 @@ namespace TrainEngine
                     }
                 }
 
-                if (stop.HasDeparted)
+                if (stop.HasDeparted && _nextStop.HasArrived == false)
                 {
                     // 120 km * 
-                    int distance = Train.Speed * (FakeTime.MinutesSinceStart - _minutesSinceLastDeparture);
+                    double distance = Train.Speed / 60d * (FakeTime.MinutesSinceStart - _minutesSinceLastDeparture);
                     //Console.WriteLine($"The train {Train.Name} has gone {distance} km.");
 
                     if (distance >= _nextStation.Distance) {
                         Console.ForegroundColor = Train.Color;
                         Console.WriteLine($"{_fakeTime.GetFormattedTimeString()} - {Train.Name} has arrived at {_nextStation.Name}");
-                        stop.HasDeparted = false;
-                        stop.HasArrived = true;
+                        Console.ForegroundColor = ConsoleColor.White;
+                        //_nextStop.HasDeparted = false;
+                        _nextStop.HasArrived = true;
+                        
                         _minutesSinceLastDeparture = 0;
                     }
                     else
