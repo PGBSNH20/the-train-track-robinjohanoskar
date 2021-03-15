@@ -15,9 +15,17 @@ namespace TrainConsole
             TrainData trainFile = new TrainData("Data/trains.txt");
             //FileData passengerFile = new FileData("Data/passengers.txt", ';');
             StationORM stationFile = new StationORM("Data/stations.txt");
-            Track newTrack = new Track("Data/traintrack2.txt", stationFile);
-
+            Track newTrack = new Track("Data/traintrack2.txt");
             newTrack.ReadTrack();
+
+            // TODO: Remove this output before "release" {
+            Console.WriteLine("station.ID station.Name station.Distance");
+            foreach (var station in StationORM.Stations)
+            {
+                Console.WriteLine($"{station.ID} {station.Name} {station.Distance}");
+            }
+            Console.WriteLine();
+            // }
 
             List<ITravelPlan> travelPlans = new List<ITravelPlan>();
 
@@ -41,10 +49,19 @@ namespace TrainConsole
                 travelPlans.Add(travelPlan);
             }
 
+            // Create a fakeTime object which we can send into the travel plan "simulator".
             FakeTime fakeTime = new FakeTime(10, 20);
 
+            //Console.WriteLine($"TrainId; StationId; ArrivalTime; DepartureTime");
             foreach (var travelPlan in travelPlans)
             {
+                //Console.WriteLine($"Travel plan for train: ({travelPlan.Train.Id}) {travelPlan.Train.Name}");
+                foreach (var stop in travelPlan.Stops)
+                {
+                    //Console.WriteLine($"{stop.TrainId}; {stop.StationId}; {stop.ArrivalTime.GetFormattedTimeString()}; {stop.DepartureTime != null ? stop.DepartureTime.GetFormattedTimeString()}");
+                    //Console.WriteLine();
+                    //Console.WriteLine();
+                }
                 travelPlan.Simulate(fakeTime);
             }
 
