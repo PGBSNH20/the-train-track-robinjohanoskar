@@ -15,6 +15,7 @@ Saker vi har kvar att göra:
 7. Ladda travelplan
 8. Unit tests
 9. level crossing?
+10. Skapa upp filstruktur för ORM
 
 
 
