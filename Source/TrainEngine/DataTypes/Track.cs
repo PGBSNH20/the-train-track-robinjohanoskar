@@ -10,10 +10,9 @@ namespace TrainEngine.DataTypes
 
         public StationORM Station { get; }
 
-        public Track(string trackPath, StationORM station)
+        public Track(string trackPath)
         {
             FileLines = File.ReadAllLines(trackPath);
-            Station = station;
         }
 
         int distance = 0;
@@ -54,11 +53,11 @@ namespace TrainEngine.DataTypes
                 }
                 else if (nextChar == '-')
                 {
-                    distance++;
+                    distance += 10;
                 }
                 else if (nextChar == '=')
                 {
-                    distance++;
+                    distance += 10;
                 }
             }
         }

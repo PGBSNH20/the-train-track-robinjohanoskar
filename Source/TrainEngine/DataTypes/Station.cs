@@ -9,7 +9,7 @@ namespace TrainEngine.DataTypes
         public int ID { get; set; }
 
         public string Name { get; set; }
-
+        // Distance in "km".
         public int Distance { get; set; }
 
         public bool EndStation { get; set; }
