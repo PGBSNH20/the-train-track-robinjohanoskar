@@ -13,7 +13,6 @@ namespace TrainEngine
         Train Train { get; }
         List<TimetableStop> Stops { get; set; }
         void Simulate(FakeTime fakeTime);
-
         void SavePlan();
     }
 
@@ -107,11 +106,11 @@ namespace TrainEngine
 
         public void SavePlan()
         {
-            TravelPlanJson jsonTravelplan = new TravelPlanJson(StationORM.Stations, this.Train);
+            TravelPlanJson jsonTravelplan = new TravelPlanJson(StationORM.Stations, Stops, this.Train);
 
             string json = JsonConvert.SerializeObject(jsonTravelplan);
 
-            File.WriteAllText(@"C:\Temp\travelplan.json", json);
+            File.WriteAllText(@$"C:\Temp\travelplan-train{Train.Id}.json", json);
         }
     }
 }

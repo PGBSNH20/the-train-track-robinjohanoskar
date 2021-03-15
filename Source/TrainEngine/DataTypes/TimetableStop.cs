@@ -1,4 +1,6 @@
-﻿namespace TrainEngine.DataTypes
+﻿using Newtonsoft.Json;
+
+namespace TrainEngine.DataTypes
 {
     public class TimetableStop
     {
@@ -9,6 +11,8 @@
         public FakeTime DepartureTime { get; set; } // time in seconds
         public FakeTime ArrivalTime { get; set; } // time in seconds
         // public bool Completed { get; set; } = false;
+        
+        [JsonIgnore]
         public bool HasArrived { get; set; } = false;
         public bool HasDeparted { get; set; } = false;
 
