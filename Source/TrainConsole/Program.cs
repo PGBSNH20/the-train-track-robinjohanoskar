@@ -33,6 +33,8 @@ namespace TrainConsole
             // Create a fakeTime object which we can send into the travel plan "simulator".
             FakeTime fakeTime = new FakeTime(10, 00);
 
+            System.Console.WriteLine("The Train Simulator");
+
             foreach (var travelPlan in travelPlans)
             {
                 travelPlan.Simulate(fakeTime);
@@ -40,6 +42,7 @@ namespace TrainConsole
 
             // Start the time after all travelplan simulations have been instantiated.
             fakeTime.StartTime();
+
 
             TravelPlan travelPlan1 = new TravelPlan();
             travelPlan1.LoadPlan(@"C:\Temp\travelplan-train2.json");

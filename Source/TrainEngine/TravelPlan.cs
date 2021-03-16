@@ -47,6 +47,12 @@ namespace TrainEngine
 
         public void Tick()
         {
+            // If the FakeTime background thread is not running (i.e. when the time is "24:xx"), stop this (TravelPlan) thread.
+            if (!_fakeTime.TimeThread.IsAlive)
+            {
+                return;
+            }
+
             Thread.Sleep(_fakeTime.TickInterval / 2);
 
             foreach (TimetableStop stop in Timetable)
@@ -121,9 +127,9 @@ namespace TrainEngine
                 JsonSerializer serializer = new JsonSerializer();
                 TravelPlanJson travelPlan = (TravelPlanJson)serializer.Deserialize(file, typeof(TravelPlanJson));
 
-                Train = travelPlan.Train;
-                Timetable = travelPlan.Timetable.ToList();
                 Stations = travelPlan.Stations.ToList();
+                Timetable = travelPlan.Timetable.ToList();
+                Train = travelPlan.Train;
             }
         }
     }

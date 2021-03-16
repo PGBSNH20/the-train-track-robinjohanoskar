@@ -5,6 +5,8 @@ namespace TrainEngine
 {
     public class FakeTime
     {
+        private bool _threadRunning = true;
+
         public int TickInterval { get; set; }
         public int Hours { get; set; }
         public int Minutes { get; set; }
@@ -14,7 +16,7 @@ namespace TrainEngine
 
         public FakeTime(int hours, int minutes)
         {
-            TickInterval = 100;
+            TickInterval = 10;
             Hours = hours;
             Minutes = minutes;
         }
@@ -27,11 +29,17 @@ namespace TrainEngine
         public void StartTime()
         {
             TimeThread = new Thread(Tick);
+            TimeThread.IsBackground = true;
             TimeThread.Start();
         }
 
         public void Tick()
         {
+            if (!_threadRunning)
+            {
+                return;
+            }
+
             Thread.Sleep(TickInterval);
             Minutes++;
             MinutesSinceStart++;
@@ -44,6 +52,7 @@ namespace TrainEngine
             {
                 Hours = 0;
                 Minutes = 0;
+                _threadRunning = false;
             }
 
             // todo print time in top left corner?

@@ -12,7 +12,6 @@ namespace TrainEngine.DataTypes
 
         public static Crossing newCrossing { get; set; }
         public string[] FileLines { get; set; }
-        public StationORM Station { get; }
 
         public TrackORM(string trackPath, List<Station> stations)
         {
