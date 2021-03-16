@@ -1,51 +1,51 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.Dynamic;
 using System.IO;
+using System.Linq;
 
 namespace TrainEngine.DataTypes
 {
     public class TrackORM
     {
+        private int distance = 0;
+
         public static Crossing newCrossing { get; set; }
         public string[] FileLines { get; set; }
         public StationORM Station { get; }
 
-        public TrackORM(string trackPath)
+        public TrackORM(string trackPath, List<Station> stations)
         {
             FileLines = File.ReadAllLines(trackPath);
-        }
 
-        int distance = 0;
+            int firstStationY = -1;
+            int firstStationX = -1;
 
-        public void ReadTrack()
-        {
-            // Find the first station
+            // Find the first station, and one one cannot be found return.
             for (int yLine = 0; yLine < FileLines.Length; yLine++)
             {
                 for (int xChar = 0; xChar < FileLines[yLine].Length; xChar++)
                 {
-                    if (FileLines[yLine][xChar] == '1')
-                    {
-                        foreach(Station s in StationORM.Stations)
-                        {
-                            if(s.ID == 1)
-                            {
-                                SearchNext(yLine, xChar);
-                            }
-                        }
+                    if (FileLines[yLine][xChar] == '1' && stations.Any(station => station.ID == 1)) {
+                        firstStationY = yLine;
+                        firstStationX = xChar;
                     }
                 }
             }
-        }
-        
-        public void SearchNext(int y, int x)
-        {
-            for (x += 1; x < FileLines[y].Length; x++)
+
+            if (firstStationY == -1 || firstStationX == -1)
             {
-                char nextChar = FileLines[y][x];
+                return;
+            }
+
+            // The first station was found.
+            for (firstStationX += 1; firstStationX < FileLines[firstStationY].Length; firstStationX++)
+            {
+                char nextChar = FileLines[firstStationY][firstStationX];
 
                 if (Char.IsDigit(nextChar))
                 {
-                    StationORM.Stations.Find(a => a.ID == int.Parse(nextChar.ToString())).Distance = distance;
+                    stations.Find(a => a.ID == int.Parse(nextChar.ToString())).Distance = distance;
                     distance = 0;
                 }
                 else if (nextChar == '-')
@@ -57,7 +57,6 @@ namespace TrainEngine.DataTypes
                     distance += 10;
                     newCrossing = new Crossing();
                     newCrossing.Distance = distance;
-
                 }
             }
         }

@@ -11,8 +11,7 @@ namespace TrainConsole
             ScheduleORM scheduleFile = new ScheduleORM("Data/timetable.txt");
             TrainORM trainFile = new TrainORM("Data/trains.txt");
             StationORM stationFile = new StationORM("Data/stations.txt");
-            TrackORM newTrack = new TrackORM("Data/traintrack2.txt");
-            newTrack.ReadTrack(stationFile.Stations);
+            TrackORM newTrack = new TrackORM("Data/traintrack2.txt", stationFile.Stations);
 
             List<ITravelPlan> travelPlans = new List<ITravelPlan>();
 
@@ -31,10 +30,6 @@ namespace TrainConsole
                 travelPlans.Add(travelPlan);
             }
 
-            // todo fix bug with the file not being found
-            TravelPlan travelPlan1 = new TravelPlan();
-            travelPlan1.LoadPlan(@"C:\Temp\travelplan-train2.json");
-
             // Create a fakeTime object which we can send into the travel plan "simulator".
             FakeTime fakeTime = new FakeTime(10, 00);
 
@@ -45,6 +40,9 @@ namespace TrainConsole
 
             // Start the time after all travelplan simulations have been instantiated.
             fakeTime.StartTime();
+
+            TravelPlan travelPlan1 = new TravelPlan();
+            travelPlan1.LoadPlan(@"C:\Temp\travelplan-train2.json");
         }
     }
 }
