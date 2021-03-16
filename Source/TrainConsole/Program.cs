@@ -47,6 +47,8 @@ namespace TrainConsole
                     
                 travelPlan.SavePlan();
 
+                travelPlan.LoadPlan("travelplan-train2.json");
+
                 // Save "travelPlan" to a list:
                 travelPlans.Add(travelPlan);
             }

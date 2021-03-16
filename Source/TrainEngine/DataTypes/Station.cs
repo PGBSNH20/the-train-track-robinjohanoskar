@@ -30,7 +30,7 @@ namespace TrainEngine.DataTypes
     {
         public string FileName;
 
-        public static List<Station> Stations { get; } = new List<Station>();
+        public static List<Station> Stations { get; set; } = new List<Station>();
 
         public StationORM(string filePath)
         {

@@ -14,11 +14,12 @@ namespace TrainEngine
         List<TimetableStop> Stops { get; set; }
         void Simulate(FakeTime fakeTime);
         void SavePlan();
+        void LoadPlan(string jsonPath);
     }
 
     public class TravelPlan : ITravelPlan
     {
-        public Train Train { get; }
+        public Train Train { get; set; }
         public List<TimetableStop> Stops { get; set; }
         // pseudo-code: 
         // public List<Event> CompletedEvents { get; set; }
@@ -28,11 +29,13 @@ namespace TrainEngine
         private int _minutesSinceLastDeparture;
         private TimetableStop _nextStop;
         private Station _nextStation;
+        //public List<Station> _stations;
 
-        public TravelPlan(Train train, List<TimetableStop> stops)
+        public TravelPlan(Train train, List<TimetableStop> stops) //, List<Station> stations)
         {
             Train = train;
             Stops = stops;
+            //_stations = stations;
         }
 
         public void Simulate(FakeTime fakeTime)
@@ -111,6 +114,19 @@ namespace TrainEngine
             string json = JsonConvert.SerializeObject(jsonTravelplan);
 
             File.WriteAllText(@$"C:\Temp\travelplan-train{Train.Id}.json", json);
+        }
+
+        public void LoadPlan(string jsonPath)
+        {
+            using (StreamReader file = File.OpenText(@$"c:\temp\{jsonPath}"))
+            {
+                JsonSerializer serializer = new JsonSerializer();
+                TravelPlanJson travelPlan = (TravelPlanJson)serializer.Deserialize(file, typeof(TravelPlanJson));
+
+                StationORM.Stations = travelPlan.Stations.ToList();
+                Stops = travelPlan.Stops.ToList();
+                Train = travelPlan.Train;
+            }
         }
     }
 }
