@@ -11,16 +11,16 @@ namespace TrainEngine.Tests
         public void When_ScheduleORMLoadsFile_Validate_OneSTopForEachTrain()
         {
             //Arrange
-            ScheduleORM scheduleFile = new ScheduleORM("Data/timetable.txt");
+            TimetableORM timetableFile = new TimetableORM("Data/timetable.txt");
 
              //Assert
-            Assert.IsType<ScheduleORM>(scheduleFile);
-            Assert.Equal(2, scheduleFile.Timetable[0].TrainId);
-            Assert.Equal(1, scheduleFile.Timetable[0].StationId);
-            Assert.Equal("10:20", scheduleFile.Timetable[0].DepartureTime.ToString());
-            Assert.Equal(3, scheduleFile.Timetable[3].TrainId);
-            Assert.Equal(1, scheduleFile.Timetable[3].StationId);
-            Assert.Equal("10:23", scheduleFile.Timetable[3].DepartureTime.ToString());
+            Assert.IsType<TimetableORM>(timetableFile);
+            Assert.Equal(2, timetableFile.Timetable[0].TrainId);
+            Assert.Equal(1, timetableFile.Timetable[0].StationId);
+            Assert.Equal("10:20", timetableFile.Timetable[0].DepartureTime.ToString());
+            Assert.Equal(3, timetableFile.Timetable[3].TrainId);
+            Assert.Equal(1, timetableFile.Timetable[3].StationId);
+            Assert.Equal("10:23", timetableFile.Timetable[3].DepartureTime.ToString());
         }
 
         [Fact]
@@ -54,7 +54,7 @@ namespace TrainEngine.Tests
         {
             //Arrange
             StationORM stationFile = new StationORM("Data/stations.txt");
-            ScheduleORM scheduleFile = new ScheduleORM("Data/timetable.txt");
+            TimetableORM timetableFile = new TimetableORM("Data/timetable.txt");
             TrainORM trainFile = new TrainORM("Data/trains.txt");
             new StationORM("Data/stations.txt");
             TrackORM newTrack = new TrackORM("Data/traintrack2.txt", stationFile.Stations);
@@ -63,7 +63,7 @@ namespace TrainEngine.Tests
             // Create the travel plan and save it to file.
             new TrainPlanner(train)
                 .AddStations(stationFile.Stations)
-                .ReadSchedule(scheduleFile.Timetable.Where(stop => stop.TrainId == train.Id).ToList())
+                .AddTimetable(timetableFile.Timetable.Where(stop => stop.TrainId == train.Id).ToList())
                 .GeneratePlan()
                 .SavePlan();
 

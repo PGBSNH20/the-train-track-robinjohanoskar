@@ -8,10 +8,10 @@ namespace TrainConsole
     {
         static void Main(string[] args)
         {
-            ScheduleORM scheduleFile = new ScheduleORM("Data/timetable.txt");
+            TimetableORM timetableFile = new TimetableORM("Data/timetable.txt");
             TrainORM trainFile = new TrainORM("Data/trains.txt");
             StationORM stationFile = new StationORM("Data/stations.txt");
-            TrackORM newTrack = new TrackORM("Data/traintrack2.txt", stationFile.Stations);
+            new TrackORM("Data/traintrack2.txt", stationFile.Stations);
 
             List<ITravelPlan> travelPlans = new List<ITravelPlan>();
 
@@ -20,7 +20,7 @@ namespace TrainConsole
                 // Create the travel plan for the train "newTrain".
                 ITravelPlan travelPlan = new TrainPlanner(train)
                     .AddStations(stationFile.Stations)
-                    .ReadSchedule(scheduleFile.Timetable)
+                    .AddTimetable(timetableFile.Timetable)
                     .GeneratePlan();
                     
                 // Save the travel plan to file

@@ -7,7 +7,7 @@ namespace TrainEngine
 {
     public interface ITrainPlanner
     {
-        ITrainPlanner ReadSchedule(List<TimetableStop> timetable);
+        ITrainPlanner AddTimetable(List<TimetableStop> timetable);
         ITrainPlanner AddStations(List<Station> stations);
         ITravelPlan GeneratePlan();
     }
@@ -22,7 +22,7 @@ namespace TrainEngine
             _train = train;
         }
 
-        public ITrainPlanner ReadSchedule(List<TimetableStop> timetable)
+        public ITrainPlanner AddTimetable(List<TimetableStop> timetable)
         {
             _timetable = timetable.Where(stop => stop.TrainId == _train.Id).ToList();
             return this;

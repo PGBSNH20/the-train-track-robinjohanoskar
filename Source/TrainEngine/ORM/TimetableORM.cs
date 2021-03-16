@@ -4,11 +4,11 @@ using System.Linq;
 
 namespace TrainEngine.DataTypes
 {
-    public class ScheduleORM
+    public class TimetableORM
     {
         public List<TimetableStop> Timetable { get; } = new List<TimetableStop>();
 
-        public ScheduleORM(string filePath)
+        public TimetableORM(string filePath)
         {
             string[] lines = File.ReadAllLines(filePath);
 
