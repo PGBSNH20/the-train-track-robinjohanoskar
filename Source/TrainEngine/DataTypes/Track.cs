@@ -6,6 +6,8 @@ namespace TrainEngine.DataTypes
 {
     public class Track
     {
+        public static Crossing newCrossing { get; set; }
+
         public string[] FileLines { get; set; }
 
         public StationORM Station { get; }
@@ -58,6 +60,9 @@ namespace TrainEngine.DataTypes
                 else if (nextChar == '=')
                 {
                     distance += 10;
+                    newCrossing = new Crossing();
+                    newCrossing.distance = distance;
+
                 }
             }
         }

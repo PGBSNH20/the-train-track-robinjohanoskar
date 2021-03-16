@@ -15,6 +15,7 @@ namespace TrainEngine
 
     public class TrainPlanner : ITrainPlanner
     {
+
         private Train _train;
         //private List<Stop> _stops = new List<Stop>();
         private List<TimetableStop> _stops = new List<TimetableStop>();

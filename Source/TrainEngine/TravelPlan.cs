@@ -29,6 +29,7 @@ namespace TrainEngine
         private int _minutesSinceLastDeparture;
         private TimetableStop _nextStop;
         private Station _nextStation;
+        private bool _hasPassedCrossing;
         //public List<Station> _stations;
 
         public TravelPlan(Train train, List<TimetableStop> stops) //, List<Station> stations)
@@ -37,7 +38,10 @@ namespace TrainEngine
             Stops = stops;
             //_stations = stations;
         }
+        public TravelPlan()
+        {
 
+        }
         public void Simulate(FakeTime fakeTime)
         {
             _fakeTime = fakeTime;
@@ -82,9 +86,22 @@ namespace TrainEngine
                     double distance = Train.Speed / 60d * (FakeTime.MinutesSinceStart - _minutesSinceLastDeparture);
                     //Console.WriteLine($"The train {Train.Name} has gone {distance} km.");
 
+                    if (distance >= Track.newCrossing.distance - 5 && distance < Track.newCrossing.distance + 5 && Track.newCrossing.barClosed == false && _hasPassedCrossing == false)
+                    {
+                        Track.newCrossing.barClosed = true;
+                        Console.WriteLine($"Closing crossingbars {Train.Name} is passing");
+                    }
+
+                    if (distance >= Track.newCrossing.distance + 5 && Track.newCrossing.barClosed == true && _hasPassedCrossing == false)
+                    {
+                        _hasPassedCrossing = true;
+                        Track.newCrossing.barClosed = false;
+                        Console.WriteLine("Open crossingbars");
+                    }
+
                     if (distance >= _nextStation.Distance) {
                         Console.ForegroundColor = Train.Color;
-                        Console.WriteLine($"{_fakeTime.GetFormattedTimeString()} - {Train.Name} has arrived at {_nextStation.Name}");
+                        Console.WriteLine($"{_fakeTime.GetFormattedTimeString()} - {Train.Name} has arrived at {_nextStation.Name} ");
                         Console.ForegroundColor = ConsoleColor.White;
                         //_nextStop.HasDeparted = false;
                         _nextStop.HasArrived = true;
