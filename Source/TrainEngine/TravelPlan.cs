@@ -11,7 +11,7 @@ namespace TrainEngine
     public interface ITravelPlan
     {
         Train Train { get; }
-        List<TimetableStop> Stops { get; set; }
+        List<TimetableStop> Timetable { get; set; }
         void Simulate(FakeTime fakeTime);
         void SavePlan();
         void LoadPlan(string jsonPath);
@@ -20,7 +20,7 @@ namespace TrainEngine
     public class TravelPlan : ITravelPlan
     {
         public Train Train { get; set; }
-        public List<TimetableStop> Stops { get; set; }
+        public List<TimetableStop> Timetable { get; set; }
         private Thread _travelPlanThread;
         private FakeTime _fakeTime;
         private int _minutesSinceLastDeparture;
@@ -29,10 +29,10 @@ namespace TrainEngine
         private bool _hasPassedCrossing;
 
         public TravelPlan() { }
-        public TravelPlan(Train train, List<TimetableStop> stops)
+        public TravelPlan(Train train, List<TimetableStop> timetable)
         {
             Train = train;
-            Stops = stops;
+            Timetable = timetable;
         }
 
         public void Simulate(FakeTime fakeTime)
@@ -46,7 +46,7 @@ namespace TrainEngine
         {
             Thread.Sleep(_fakeTime.TickInterval / 2);
 
-            foreach (TimetableStop stop in Stops)
+            foreach (TimetableStop stop in Timetable)
             {
                 // Get the station name from the static List "StationORM.Stations".
                 string stationName = StationORM.Stations.Find(station => station.ID == stop.StationId).Name;
@@ -60,10 +60,10 @@ namespace TrainEngine
                     Console.WriteLine($"{_fakeTime.ToString()} - {Train.Name} has departed {stationName}");
                     Console.ForegroundColor = ConsoleColor.White;
 
-                    int i = Stops.IndexOf(stop);
-                    if (i != -1 && i + 1 < Stops.Count)
+                    int i = Timetable.IndexOf(stop);
+                    if (i != -1 && i + 1 < Timetable.Count)
                     {
-                        _nextStop = Stops[i + 1];
+                        _nextStop = Timetable[i + 1];
                         _nextStation = StationORM.Stations.Find(station => station.ID == _nextStop.StationId);
                     }
                 }
@@ -104,7 +104,7 @@ namespace TrainEngine
         // Save a travel plan (.json file) to disk.
         public void SavePlan()
         {
-            TravelPlanJson jsonTravelplan = new TravelPlanJson(StationORM.Stations, Stops, this.Train);
+            TravelPlanJson jsonTravelplan = new TravelPlanJson(StationORM.Stations, Timetable, this.Train);
 
             string json = JsonConvert.SerializeObject(jsonTravelplan);
 
@@ -120,7 +120,7 @@ namespace TrainEngine
                 TravelPlanJson travelPlan = (TravelPlanJson)serializer.Deserialize(file, typeof(TravelPlanJson));
 
                 StationORM.Stations = travelPlan.Stations.ToList();
-                Stops = travelPlan.Stops.ToList();
+                Timetable = travelPlan.Timetable.ToList();
                 Train = travelPlan.Train;
             }
         }

@@ -6,7 +6,7 @@ namespace TrainEngine.DataTypes
 {
     public class ScheduleORM
     {
-        public List<TimetableStop> Stops { get; } = new List<TimetableStop>();
+        public List<TimetableStop> Timetable { get; } = new List<TimetableStop>();
 
         public ScheduleORM(string filePath)
         {
@@ -44,7 +44,7 @@ namespace TrainEngine.DataTypes
                     catch (System.Exception) {}
                 }
                
-                Stops.Add(new TimetableStop(trainId, stationId, departureTime, arrivalTime));
+                Timetable.Add(new TimetableStop(trainId, stationId, departureTime, arrivalTime));
             }
         }
     }

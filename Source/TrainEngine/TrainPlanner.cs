@@ -7,13 +7,13 @@ namespace TrainEngine
     public interface ITrainPlanner
     {
         ITravelPlan GeneratePlan();
-        ITrainPlanner ReadSchedule(List<TimetableStop> stops);
+        ITrainPlanner ReadSchedule(List<TimetableStop> timetable);
     }
 
     public class TrainPlanner : ITrainPlanner
     {
         private Train _train;
-        private List<TimetableStop> _stops = new List<TimetableStop>();
+        private List<TimetableStop> _timetable = new List<TimetableStop>();
         public bool DirectionForward = true;
 
         public TrainPlanner(Train train)
@@ -21,15 +21,15 @@ namespace TrainEngine
             _train = train;
         }
 
-        public ITrainPlanner ReadSchedule(List<TimetableStop> stops)
+        public ITrainPlanner ReadSchedule(List<TimetableStop> timetable)
         {
-            _stops = stops.Where(stop => stop.TrainId == _train.Id).ToList();
+            _timetable = timetable.Where(stop => stop.TrainId == _train.Id).ToList();
             return this;
         }
 
         public ITravelPlan GeneratePlan()
         {
-            return new TravelPlan(_train, _stops);
+            return new TravelPlan(_train, _timetable);
         }
     }
 }

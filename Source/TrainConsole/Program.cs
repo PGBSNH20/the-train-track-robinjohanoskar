@@ -22,7 +22,7 @@ namespace TrainConsole
                 // Create the travel plan for the train "newTrain".
                 ITravelPlan travelPlan = new TrainPlanner(train)
                     //.AddStations(stationFile.Stations)
-                    .ReadSchedule(scheduleFile.Stops)
+                    .ReadSchedule(scheduleFile.Timetable)
                     .GeneratePlan();
                     
                 // Save the travel plan to file

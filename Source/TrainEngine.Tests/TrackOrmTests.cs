@@ -15,12 +15,12 @@ namespace TrainEngine.Tests
 
              //Assert
             Assert.IsType<ScheduleORM>(scheduleFile);
-            Assert.Equal(2, scheduleFile.Stops[0].TrainId);
-            Assert.Equal(1, scheduleFile.Stops[0].StationId);
-            Assert.Equal("10:20", scheduleFile.Stops[0].DepartureTime.ToString());
-            Assert.Equal(3, scheduleFile.Stops[3].TrainId);
-            Assert.Equal(1, scheduleFile.Stops[3].StationId);
-            Assert.Equal("10:23", scheduleFile.Stops[3].DepartureTime.ToString());
+            Assert.Equal(2, scheduleFile.Timetable[0].TrainId);
+            Assert.Equal(1, scheduleFile.Timetable[0].StationId);
+            Assert.Equal("10:20", scheduleFile.Timetable[0].DepartureTime.ToString());
+            Assert.Equal(3, scheduleFile.Timetable[3].TrainId);
+            Assert.Equal(1, scheduleFile.Timetable[3].StationId);
+            Assert.Equal("10:23", scheduleFile.Timetable[3].DepartureTime.ToString());
         }
 
         [Fact]
@@ -63,11 +63,11 @@ namespace TrainEngine.Tests
 
             // Create the travel plan and save it to file.
             new TrainPlanner(train)
-                .ReadSchedule(scheduleFile.Stops.Where(stop => stop.TrainId == train.Id).ToList())
+                .ReadSchedule(scheduleFile.Timetable.Where(stop => stop.TrainId == train.Id).ToList())
                 .GeneratePlan()
                 .SavePlan();
 
-            string expectedFileContent = "{\"Stations\":[{\"ID\":1,\"Name\":\"Stonecro\",\"Distance\":0,\"EndStation\":true},{\"ID\":2,\"Name\":\"Mount Juanceo\",\"Distance\":120,\"EndStation\":false},{\"ID\":3,\"Name\":\"Grand Retro\",\"Distance\":130,\"EndStation\":true}],\"Stops\":[{\"TrainId\":2,\"StationId\":1,\"DepartureTime\":{\"TickInterval\":100,\"Hours\":10,\"Minutes\":20,\"TimeThread\":null},\"ArrivalTime\":null,\"HasDeparted\":false},{\"TrainId\":2,\"StationId\":2,\"DepartureTime\":{\"TickInterval\":100,\"Hours\":12,\"Minutes\":0,\"TimeThread\":null},\"ArrivalTime\":null,\"HasDeparted\":false},{\"TrainId\":2,\"StationId\":3,\"DepartureTime\":null,\"ArrivalTime\":null,\"HasDeparted\":false}],\"Train\":{\"Id\":2,\"Name\":\"Golden Arrow\",\"Speed\":120,\"Color\":6}}";
+            string expectedFileContent = "{\"Stations\":[{\"ID\":1,\"Name\":\"Stonecro\",\"Distance\":0,\"EndStation\":true},{\"ID\":2,\"Name\":\"Mount Juanceo\",\"Distance\":120,\"EndStation\":false},{\"ID\":3,\"Name\":\"Grand Retro\",\"Distance\":130,\"EndStation\":true}],\"Timetable\":[{\"TrainId\":2,\"StationId\":1,\"DepartureTime\":{\"TickInterval\":100,\"Hours\":10,\"Minutes\":20,\"TimeThread\":null},\"ArrivalTime\":null,\"HasDeparted\":false},{\"TrainId\":2,\"StationId\":2,\"DepartureTime\":{\"TickInterval\":100,\"Hours\":12,\"Minutes\":0,\"TimeThread\":null},\"ArrivalTime\":null,\"HasDeparted\":false},{\"TrainId\":2,\"StationId\":3,\"DepartureTime\":null,\"ArrivalTime\":null,\"HasDeparted\":false}],\"Train\":{\"Id\":2,\"Name\":\"Golden Arrow\",\"Speed\":120,\"Color\":6}}";
 
             string actualOutputFile = File.ReadAllText(@"C:\Temp\travelplan-train2.json");
 
@@ -93,7 +93,7 @@ namespace TrainEngine.Tests
             //Thread.Sleep(100);
 
             //Assert
-            Assert.Collection(travelPlan2.Stops, a => Assert.True(a.HasArrived && a.HasDeparted));
+            Assert.Collection(travelPlan2.Timetable, a => Assert.True(a.HasArrived && a.HasDeparted));
             //Assert.Equal(1, StationORM.Stations[0].ID);
             //Assert.Equal("Stonecro", StationORM.Stations[0].Name);
             //Assert.True(StationORM.Stations[0].EndStation);
