@@ -1,0 +1,5 @@
+Id,Name,MaxSpeed,Operated,Color
+1,Flying Scotsman,100,false,"Red"
+2,Golden Arrow,120,true,"DarkYellow"
+3,Lapplandståget,80,true,"Cyan"
+4,Norrlandståget,72,false,"DarkGreen"

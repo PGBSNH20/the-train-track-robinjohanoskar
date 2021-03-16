@@ -7,6 +7,56 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <None Remove="Data\controllerlog.txt" />
+    <None Remove="Data\passengers.txt" />
+    <None Remove="Data\stations.txt" />
+    <None Remove="Data\stations2.txt" />
+    <None Remove="Data\timetable.txt" />
+    <None Remove="Data\timetable2.txt" />
+    <None Remove="Data\timetable_formatted.txt" />
+    <None Remove="Data\trains.txt" />
+    <None Remove="Data\traintrack1.txt" />
+    <None Remove="Data\traintrack2.txt" />
+    <None Remove="Data\traintrack3.txt" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Content Include="Data\controllerlog.txt">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Data\passengers.txt">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Data\stations.txt">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Data\stations2.txt">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Data\timetable.txt">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Data\timetable2.txt">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Data\timetable_formatted.txt">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Data\trains.txt">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Data\traintrack1.txt">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Data\traintrack2.txt">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Data\traintrack3.txt">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+  </ItemGroup>
+
+  <ItemGroup>
     <PackageReference Include="Microsoft.NET.Test.Sdk" Version="16.2.0" />
     <PackageReference Include="xunit" Version="2.4.0" />
     <PackageReference Include="xunit.runner.visualstudio" Version="2.4.0" />
