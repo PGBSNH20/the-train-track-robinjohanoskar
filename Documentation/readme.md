@@ -1,7 +1,5 @@
 # Our train project
-What we have done can be explained by this mindmap.
-![Mindmap of train track](mindmap.jpg)
-Bla bla bla bla
+Program flowchart
 
 ![Flowchart](Flowchart.png)
 
