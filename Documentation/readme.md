@@ -16,7 +16,8 @@ Saker vi har kvar att göra:
 8. Unit tests
 9. Level crossing & switches?
 10. Skapa upp filstruktur för ORM
-11. Spara järnvägen till travelplan 
+11. Spara järnvägen till travelplan.
+12. Städa koden.
 
 
 
