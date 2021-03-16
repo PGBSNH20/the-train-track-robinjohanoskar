@@ -3,7 +3,7 @@ What we have done can be explained by this mindmap.
 ![Mindmap of train track](mindmap.jpg)
 Bla bla bla bla
 
-
+![Flowchart](Flowchart.png)
 
 Saker vi har kvar att göra:
 1. Dokumentation
