@@ -19,41 +19,25 @@ namespace TrainConsole
             Track newTrack = new Track("Data/traintrack2.txt");
             newTrack.ReadTrack();
 
-            // TODO: Remove this output before "release" {
-            Console.WriteLine("station.ID station.Name station.Distance");
-            foreach (var station in StationORM.Stations)
-            {
-                Console.WriteLine($"{station.ID} {station.Name} {station.Distance}");
-            }
-            Console.WriteLine();
-            // }
-
             List<ITravelPlan> travelPlans = new List<ITravelPlan>();
 
             foreach (Train train in trainFile.Trains)
             {
-                // Create the schedule for the train "newTrain".
-                List<TimetableStop> scheduleStops = scheduleFile.Stops.Where(stop => stop.TrainId == train.Id).ToList();
-                Schedule newSchedule = new Schedule(train.Id, scheduleStops);
-
                 // Create the travel plan for the train "newTrain".
                 ITravelPlan travelPlan = new TrainPlanner(train)
-                    .ReadSchedule(newSchedule)
-                    //.LevelCrossing()
-                    //.CloseAt("10:23")
-                    //.OpenAt("10:25")
-                    //.SetSwitch(switch1, SwitchDirection.Left)
-                    //.SetSwitch(switch2, SwitchDirection.Right)
+                    .ReadSchedule(scheduleFile.Stops)
                     .GeneratePlan();
                     
+                // Save the travel plan to file
                 travelPlan.SavePlan();
 
-
-                // Save "travelPlan" to a list:
+                // Save the travel to a list
                 travelPlans.Add(travelPlan);
             }
-            //TravelPlan travelPlan1 = new TravelPlan(); 
-            //travelPlan1.LoadPlan("travelplan-train2.json");
+
+            // todo fix bug with the file not being found
+            TravelPlan travelPlan1 = new TravelPlan();
+            travelPlan1.LoadPlan(@"C:\Temp\travelplan-train2.json");
 
 
             // Create a fakeTime object which we can send into the travel plan "simulator".

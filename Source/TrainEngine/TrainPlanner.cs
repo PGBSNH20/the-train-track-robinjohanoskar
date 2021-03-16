@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Text;
 using TrainEngine.DataTypes;
 
@@ -10,7 +11,8 @@ namespace TrainEngine
         //ITrainPlanner StartTrainAt(string startTrain, bool DirectionForward);
         //ITrainPlanner StopTrainAt(Station station, string stopTrain);
         ITravelPlan GeneratePlan();
-        ITrainPlanner ReadSchedule(Schedule schedule);
+        //ITrainPlanner ReadSchedule(Schedule schedule);
+        ITrainPlanner ReadSchedule(List<TimetableStop> stops);
     }
 
     public class TrainPlanner : ITrainPlanner
@@ -31,9 +33,10 @@ namespace TrainEngine
             _train = train;
         }
 
-        public ITrainPlanner ReadSchedule(Schedule schedule)
+        //public ITrainPlanner ReadSchedule(Schedule schedule)
+        public ITrainPlanner ReadSchedule(List<TimetableStop> stops)
         {
-            _stops = schedule.Stops;
+            _stops = stops.Where(stop => stop.TrainId == _train.Id).ToList();
             return this;
         }
 

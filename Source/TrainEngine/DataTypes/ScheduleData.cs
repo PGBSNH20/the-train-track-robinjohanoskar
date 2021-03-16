@@ -6,18 +6,6 @@ using System.Text;
 
 namespace TrainEngine.DataTypes
 {
-    public class Schedule
-    {
-        public int TrainId { get; set; }
-        public List<TimetableStop> Stops { get; set; } = new List<TimetableStop>();
-        public bool DirectionForward;
-
-        public Schedule(int trainId, List<TimetableStop> stops)
-        {
-            Stops = stops;
-        }
-    }
-
     public class ScheduleData
     {
         public List<TimetableStop> Stops { get; } = new List<TimetableStop>();

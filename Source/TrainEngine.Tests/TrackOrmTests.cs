@@ -62,17 +62,11 @@ namespace TrainEngine.Tests
             Track newTrack = new Track("Data/traintrack2.txt");
             newTrack.ReadTrack();
 
-
             Train train = trainFile.Trains[1];
-
-
-            // Create the schedule for the train "newTrain".
-            List<TimetableStop> scheduleStops = scheduleFile.Stops.Where(stop => stop.TrainId == train.Id).ToList();
-            Schedule newSchedule = new Schedule(train.Id, scheduleStops);
 
             // Create the travel plan for the train "newTrain".
             new TrainPlanner(train)
-                .ReadSchedule(newSchedule)
+                .ReadSchedule(scheduleFile.Stops.Where(stop => stop.TrainId == train.Id).ToList())
                 .GeneratePlan()
                 .SavePlan();
 
