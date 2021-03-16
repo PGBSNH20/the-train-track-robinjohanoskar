@@ -7,9 +7,7 @@ namespace TrainEngine.DataTypes
     public class Track
     {
         public static Crossing newCrossing { get; set; }
-
         public string[] FileLines { get; set; }
-
         public StationORM Station { get; }
 
         public Track(string trackPath)
@@ -21,6 +19,7 @@ namespace TrainEngine.DataTypes
 
         public void ReadTrack()
         {
+            // Find the first station
             for (int yLine = 0; yLine < FileLines.Length; yLine++)
             {
                 for (int xChar = 0; xChar < FileLines[yLine].Length; xChar++)
@@ -61,7 +60,7 @@ namespace TrainEngine.DataTypes
                 {
                     distance += 10;
                     newCrossing = new Crossing();
-                    newCrossing.distance = distance;
+                    newCrossing.Distance = distance;
 
                 }
             }

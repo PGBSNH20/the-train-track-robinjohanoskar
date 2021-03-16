@@ -6,7 +6,7 @@ namespace TrainEngine.DataTypes
 {
     public class Crossing
     {
-        public bool barClosed = false;
-        public int distance;
+        public bool BarClosed { get; set; }
+        public int Distance { get; set; }
     }
 }

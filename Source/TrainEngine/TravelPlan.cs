@@ -86,15 +86,15 @@ namespace TrainEngine
                     double distance = Train.Speed / 60d * (FakeTime.MinutesSinceStart - _minutesSinceLastDeparture);
                     //Console.WriteLine($"The train {Train.Name} has gone {distance} km.");
 
-                    if (distance >= Track.newCrossing.distance - 5 && distance < Track.newCrossing.distance + 5 && Track.newCrossing.barClosed == false && _hasPassedCrossing == false)
+                    if (distance >= Track.newCrossing.Distance - 5 && distance < Track.newCrossing.Distance + 5 && Track.newCrossing.BarClosed == false && _hasPassedCrossing == false)
                     {
-                        Track.newCrossing.barClosed = true;
+                        Track.newCrossing.BarClosed = true;
                         Console.WriteLine($"Closing crossingbars {Train.Name} is passing");
                     }
-                    if (distance >= Track.newCrossing.distance + 5 && Track.newCrossing.barClosed == true && _hasPassedCrossing == false)
+                    if (distance >= Track.newCrossing.Distance + 5 && Track.newCrossing.BarClosed == true && _hasPassedCrossing == false)
                     {
                         _hasPassedCrossing = true;
-                        Track.newCrossing.barClosed = false;
+                        Track.newCrossing.BarClosed = false;
                         Console.WriteLine("Open crossingbars");
                     }
                     if (distance >= _nextStation.Distance) {
@@ -135,6 +135,7 @@ namespace TrainEngine
         {
             using (StreamReader file = File.OpenText(jsonPath))
             {
+                
                 JsonSerializer serializer = new JsonSerializer();
                 TravelPlanJson travelPlan = (TravelPlanJson)serializer.Deserialize(file, typeof(TravelPlanJson));
 

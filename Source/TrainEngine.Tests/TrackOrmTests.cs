@@ -40,6 +40,20 @@ namespace TrainEngine.Tests
         }
 
         [Fact]
+        public void When_TrackORMLoadsFile_Verfify_TheDistanceBetweenStationsAndCrossing()
+        {
+            //Arrange
+            StationORM stationFile = new StationORM("Data/stations.txt");
+            Track track = new Track("Data/traintrack2.txt");
+            track.ReadTrack();
+
+            //Assert
+            Assert.Equal(120, StationORM.Stations[1].Distance);
+            Assert.Equal(130, StationORM.Stations[2].Distance);
+            Assert.Equal(40, Track.newCrossing.Distance);
+        }
+
+        [Fact]
         public void Test_Save_TravelPlan()
         {
             ScheduleData scheduleFile = new ScheduleData("Data/timetable.txt");
@@ -89,7 +103,7 @@ namespace TrainEngine.Tests
             travelPlan2.Simulate(fakeTime);
             fakeTime.StartTime();
 
-            Thread.Sleep(100);
+            //Thread.Sleep(100);
 
             //Assert
 

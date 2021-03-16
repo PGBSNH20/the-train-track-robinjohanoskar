@@ -52,8 +52,8 @@ namespace TrainConsole
                 // Save "travelPlan" to a list:
                 travelPlans.Add(travelPlan);
             }
-            TravelPlan travelPlan1 = new TravelPlan(); 
-            travelPlan1.LoadPlan("travelplan-train2.json");
+            //TravelPlan travelPlan1 = new TravelPlan(); 
+            //travelPlan1.LoadPlan("travelplan-train2.json");
 
 
             // Create a fakeTime object which we can send into the travel plan "simulator".

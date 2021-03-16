@@ -12,7 +12,7 @@ Saker vi har kvar att göra:
 4. Passagerare?
 5. Spara ORMobjekt
 6. ~~Ladda travelplan~~
-7. Unit tests!!!
+7. Unit tests!!! (done?)
 8. ~~Level crossing~~
 9. (Skapa upp filstruktur för ORM)
 10. Spara järnvägen till travelplan!!!
