@@ -12,7 +12,7 @@ namespace TrainConsole
         static void Main(string[] args)
         {
             ScheduleData scheduleFile = new ScheduleData("Data/timetable.txt");
-            TrainData trainFile = new TrainData("Data/trains.txt");
+            TrainORM trainFile = new TrainORM("Data/trains.txt");
             //FileData passengerFile = new FileData("Data/passengers.txt", ';');
             StationORM stationFile = new StationORM("Data/stations.txt");
             Track newTrack = new Track("Data/traintrack2.txt");
@@ -56,7 +56,7 @@ namespace TrainConsole
 
 
             // Create a fakeTime object which we can send into the travel plan "simulator".
-            FakeTime fakeTime = new FakeTime(10, 20);
+            FakeTime fakeTime = new FakeTime(10, 00);
 
             //Console.WriteLine($"TrainId; StationId; ArrivalTime; DepartureTime");
             foreach (var travelPlan in travelPlans)

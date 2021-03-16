@@ -18,6 +18,7 @@
     <None Remove="Data\traintrack1.txt" />
     <None Remove="Data\traintrack2.txt" />
     <None Remove="Data\traintrack3.txt" />
+    <None Remove="Data\travelplan-train2.json" />
   </ItemGroup>
 
   <ItemGroup>
@@ -52,6 +53,9 @@
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
     <Content Include="Data\traintrack3.txt">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Data\travelplan-train2.json">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
   </ItemGroup>

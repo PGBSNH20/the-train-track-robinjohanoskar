@@ -2,17 +2,17 @@ using System;
 using Xunit;
 using TrainEngine.DataTypes;
 using System.Collections.Generic;
+using System.Threading;
 
 namespace TrainEngine.Tests
 {
     public class TrackOrmTests
     {
         [Fact]
-        //public void When_OnlyAStationIsProvided_Expect_TheResultOnlyToContainAStationWithId1()
         public void When_ScheduleORMLoadsFile_Validate_OneSTopForEachTrain()
         {
+            //Arrange
             ScheduleData scheduleFile = new ScheduleData("Data/timetable.txt");
-            // Act
 
              //Assert
             Assert.IsType<ScheduleData>(scheduleFile);
@@ -24,13 +24,49 @@ namespace TrainEngine.Tests
             Assert.Equal("10:23", scheduleFile.Stops[3].DepartureTime.GetFormattedTimeString());
         }
 
+        [Fact]
+        public void TestingAllElementsOfOneStationReadFromStationTxtFile_Expect_SameDataAsTextFile()
+        {
+            //Arrange
+            FakeTime fakeTime = new FakeTime(10, 00);
+            fakeTime.TickInterval = 1;
+
+            TravelPlan travelPlan2 = new TravelPlan();
+            travelPlan2.LoadPlan("Data/travelplan-train2.json");
+
+            travelPlan2.Simulate(fakeTime);
+            fakeTime.StartTime();
+
+            Thread.Sleep(100);
+
+            //Assert
+
+            Assert.Collection(travelPlan2.Stops, a => Assert.True(a.HasArrived && a.HasDeparted));
+            //Assert.Equal(1, StationORM.Stations[0].ID);
+            //Assert.Equal("Stonecro", StationORM.Stations[0].Name);
+            //Assert.True(StationORM.Stations[0].EndStation);
+        }
+
+        [Fact]
+        public void aTestingAllElementsOfOneStationReadFromStationTxtFile_Expect_SameDataAsTextFile()
+        {
+            //Arrange
+            StationORM stationFile = new StationORM("Data/stations.txt");
+
+            //Assert
+            Assert.IsType<StationORM>(stationFile);
+            Assert.Equal(1, StationORM.Stations[0].ID);
+            Assert.Equal("Stonecro", StationORM.Stations[0].Name);
+            Assert.True(StationORM.Stations[0].EndStation);
+        }
+
         //[Fact]
-        //public void TwoStations()
+        //public void TestingTick()
         //{
         //    Train train1 = new Train(2, "Golden Arrow", 120, true, ConsoleColor.DarkYellow);
         //    List<TimetableStop> scheduleStops = scheduleFile.Stops.Where(stop => stop.TrainId == train.Id).ToList();
         //    Schedule newSchedule = new Schedule(train1.Id, scheduleStops);
-            
+
 
         //    ITravelPlan travelPlan = new TrainPlanner(train1)
         //        //.HeadTowards(station2)
@@ -47,6 +83,8 @@ namespace TrainEngine.Tests
         //    Assert.Equal("Stockholm", travelPlan.Stops[1].Station.Name);
         //    Assert.Equal(893, travelPlan.Stops[1].Time);
         //}
+
+
 
 
 
@@ -72,7 +110,7 @@ namespace TrainEngine.Tests
         //    // Arrange
         //    string track = "[1]-[2]";
         //    TrackOrm trackOrm = new TrackOrm();
-            
+
         //    // Act
         //    var result = trackOrm.ParseTrackDescription(track);
 

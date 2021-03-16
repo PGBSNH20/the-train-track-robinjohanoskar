@@ -91,14 +91,12 @@ namespace TrainEngine
                         Track.newCrossing.barClosed = true;
                         Console.WriteLine($"Closing crossingbars {Train.Name} is passing");
                     }
-
                     if (distance >= Track.newCrossing.distance + 5 && Track.newCrossing.barClosed == true && _hasPassedCrossing == false)
                     {
                         _hasPassedCrossing = true;
                         Track.newCrossing.barClosed = false;
                         Console.WriteLine("Open crossingbars");
                     }
-
                     if (distance >= _nextStation.Distance) {
                         Console.ForegroundColor = Train.Color;
                         Console.WriteLine($"{_fakeTime.GetFormattedTimeString()} - {Train.Name} has arrived at {_nextStation.Name} ");
@@ -135,7 +133,7 @@ namespace TrainEngine
 
         public void LoadPlan(string jsonPath)
         {
-            using (StreamReader file = File.OpenText(@$"c:\temp\{jsonPath}"))
+            using (StreamReader file = File.OpenText(jsonPath))
             {
                 JsonSerializer serializer = new JsonSerializer();
                 TravelPlanJson travelPlan = (TravelPlanJson)serializer.Deserialize(file, typeof(TravelPlanJson));

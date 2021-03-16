@@ -27,10 +27,10 @@ namespace TrainEngine.DataTypes
         }
     }
 
-    public class TrainData
+    public class TrainORM
     {
         public List<Train> Trains { get; set; } = new List<Train>();
-        public TrainData(string filePath)
+        public TrainORM(string filePath)
         {
             string[] lines = File.ReadAllLines(filePath);
             for (int i = 1; i < lines.Length; i++)
