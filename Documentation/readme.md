@@ -12,7 +12,7 @@ Saker vi har kvar att göra:
 4. Passagerare?
 5. 
 6. Spara ORMobjekt
-7. Ladda travelplan
+7. ~~Ladda travelplan~~
 8. Unit tests
 9. Level crossing & switches?
 10. Skapa upp filstruktur för ORM
