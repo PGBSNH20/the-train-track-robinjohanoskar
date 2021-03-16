@@ -7,29 +7,23 @@ namespace TrainEngine.DataTypes
     public class Station
     {
         public int ID { get; set; }
-
         public string Name { get; set; }
         // Distance in "km".
         public int Distance { get; set; }
-
         public bool EndStation { get; set; }
 
+        public Station() {}
         public Station(int id, string name, bool endStation)
         {
             ID = id;
             Name = name;
             EndStation = endStation;
         }
-
-        public Station()
-        {
-
-        }
     }
+
     public class StationORM
     {
         public string FileName;
-
         public static List<Station> Stations { get; set; } = new List<Station>();
 
         public StationORM(string filePath)

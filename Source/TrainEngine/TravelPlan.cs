@@ -1,10 +1,10 @@
-﻿using System;
+﻿using Newtonsoft.Json;
+using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Threading;
 using TrainEngine.DataTypes;
-using Newtonsoft.Json;
 
 namespace TrainEngine
 {
@@ -21,41 +21,30 @@ namespace TrainEngine
     {
         public Train Train { get; set; }
         public List<TimetableStop> Stops { get; set; }
-        // pseudo-code: 
-        // public List<Event> CompletedEvents { get; set; }
-        // public List<Event> Events { get; set; } // departure, arrival, closeCrossing, openCrossing
         private Thread _travelPlanThread;
         private FakeTime _fakeTime;
         private int _minutesSinceLastDeparture;
         private TimetableStop _nextStop;
         private Station _nextStation;
         private bool _hasPassedCrossing;
-        //public List<Station> _stations;
 
-        public TravelPlan(Train train, List<TimetableStop> stops) //, List<Station> stations)
+        public TravelPlan() { }
+        public TravelPlan(Train train, List<TimetableStop> stops)
         {
             Train = train;
             Stops = stops;
-            //_stations = stations;
         }
-        public TravelPlan()
-        {
 
-        }
         public void Simulate(FakeTime fakeTime)
         {
             _fakeTime = fakeTime;
             _travelPlanThread = new Thread(Tick);
             _travelPlanThread.Start();
         }
+
         public void Tick()
         {
-            Thread.Sleep(_fakeTime.TickInterval / 2); // half of FakeTime's sleep
-            // pseudo-code:
-            // alternative solution:
-            // if (Events[0].time >= _fakeTime)
-            //      print: e.g. "time: 'trainname' has arrived at 'station'"
-            //      moved Events[0] from Events to CompletedEvents
+            Thread.Sleep(_fakeTime.TickInterval / 2);
 
             foreach (TimetableStop stop in Stops)
             {
@@ -65,12 +54,11 @@ namespace TrainEngine
                 // todo: operator overloading?
                 if (!stop.HasDeparted && stop.DepartureTime != null && stop.DepartureTime.Hours == _fakeTime.Hours && stop.DepartureTime.Minutes == _fakeTime.Minutes) {
                     stop.HasDeparted = true;
-                    Console.ForegroundColor = Train.Color;
-                    Console.WriteLine($"{_fakeTime.GetFormattedTimeString()} - {Train.Name} has departed {stationName}");
-                    Console.ForegroundColor = ConsoleColor.White;
-                    //Console.WriteLine(FakeTime.MinutesSinceStart + " minutes since start"); // testing
                     _minutesSinceLastDeparture = FakeTime.MinutesSinceStart;
-                    //_nextStationID = stop.StationId + 1;
+
+                    Console.ForegroundColor = Train.Color;
+                    Console.WriteLine($"{_fakeTime.ToString()} - {Train.Name} has departed {stationName}");
+                    Console.ForegroundColor = ConsoleColor.White;
 
                     int i = Stops.IndexOf(stop);
                     if (i != -1 && i + 1 < Stops.Count)
@@ -82,46 +70,38 @@ namespace TrainEngine
 
                 if (stop.HasDeparted && _nextStop.HasArrived == false)
                 {
-                    // 120 km * 
                     double distance = Train.Speed / 60d * (FakeTime.MinutesSinceStart - _minutesSinceLastDeparture);
-                    //Console.WriteLine($"The train {Train.Name} has gone {distance} km.");
 
-                    if (distance >= Track.newCrossing.Distance - 5 && distance < Track.newCrossing.Distance + 5 && Track.newCrossing.BarClosed == false && _hasPassedCrossing == false)
+                    // Check if the train has reached or passed a crossing and close/open the crossing accordingly.
+                    if (distance >= TrackORM.newCrossing.Distance - 5 && distance < TrackORM.newCrossing.Distance + 5 && TrackORM.newCrossing.BarClosed == false && _hasPassedCrossing == false)
                     {
-                        Track.newCrossing.BarClosed = true;
+                        TrackORM.newCrossing.BarClosed = true;
                         Console.WriteLine($"Closing crossingbars {Train.Name} is passing");
                     }
-                    if (distance >= Track.newCrossing.Distance + 5 && Track.newCrossing.BarClosed == true && _hasPassedCrossing == false)
+                    else if (distance >= TrackORM.newCrossing.Distance + 5 && TrackORM.newCrossing.BarClosed == true && _hasPassedCrossing == false)
                     {
                         _hasPassedCrossing = true;
-                        Track.newCrossing.BarClosed = false;
+                        TrackORM.newCrossing.BarClosed = false;
                         Console.WriteLine("Open crossingbars");
                     }
-                    if (distance >= _nextStation.Distance) {
-                        Console.ForegroundColor = Train.Color;
-                        Console.WriteLine($"{_fakeTime.GetFormattedTimeString()} - {Train.Name} has arrived at {_nextStation.Name} ");
-                        Console.ForegroundColor = ConsoleColor.White;
-                        //_nextStop.HasDeparted = false;
-                        _nextStop.HasArrived = true;
-                        
-                        _minutesSinceLastDeparture = 0;
-                    }
-                    else
+
+                    // Check if a train has reached a station.
+                    if (distance >= _nextStation.Distance)
                     {
-                        //Console.WriteLine($"The train {Train.Name} has gone {distance} km.");
+                        _nextStop.HasArrived = true;
+                        _minutesSinceLastDeparture = 0;
+
+                        Console.ForegroundColor = Train.Color;
+                        Console.WriteLine($"{_fakeTime.ToString()} - {Train.Name} has arrived at {_nextStation.Name} ");
+                        Console.ForegroundColor = ConsoleColor.White;
                     }
                 }
-
-                // todo: operator overloading?
-                //if (!stop.HasArrived && stop.ArrivalTime != null && stop.ArrivalTime.Hours == _fakeTime.Hours && stop.ArrivalTime.Minutes == _fakeTime.Minutes) {
-                //    stop.HasArrived = true;
-                //    Console.WriteLine($"{Train.Name} has arrived at {stop.StationId} at {_fakeTime.Hours.ToString().PadLeft(2, '0')}:{_fakeTime.Minutes.ToString().PadLeft(2, '0')}");
-                //}
             }
 
             Tick();
         }
 
+        // Save a travel plan (.json file) to disk.
         public void SavePlan()
         {
             TravelPlanJson jsonTravelplan = new TravelPlanJson(StationORM.Stations, Stops, this.Train);
@@ -131,11 +111,11 @@ namespace TrainEngine
             File.WriteAllText(@$"C:\Temp\travelplan-train{Train.Id}.json", json);
         }
 
+        // Load a travel plan (.json file) from disk.
         public void LoadPlan(string jsonPath)
         {
             using (StreamReader file = File.OpenText(jsonPath))
             {
-                
                 JsonSerializer serializer = new JsonSerializer();
                 TravelPlanJson travelPlan = (TravelPlanJson)serializer.Deserialize(file, typeof(TravelPlanJson));
 

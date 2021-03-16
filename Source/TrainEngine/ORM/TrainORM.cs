@@ -1,8 +1,8 @@
-﻿using System;
+﻿using Newtonsoft.Json;
+using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
-using System.Text;
 
 namespace TrainEngine.DataTypes
 {
@@ -12,7 +12,9 @@ namespace TrainEngine.DataTypes
         public string Name;
         // Speed: speed in km/h
         public int Speed;
+        [JsonIgnore]
         public bool Operated;
+        [JsonIgnore]
         public bool IsRunning;
         public ConsoleColor Color;
 
@@ -42,7 +44,7 @@ namespace TrainEngine.DataTypes
                     int id = int.Parse(columns[0]);
                     int speed = int.Parse(columns[2]);
                     bool operated = bool.Parse(columns[3]);
-                    //ConsoleColor color = ConsoleColor columns[4].Trim('"')];
+                    // todo: use TryParse instead?
                     ConsoleColor color = (ConsoleColor)Enum.Parse(typeof(ConsoleColor), columns[4].Trim('"'), true);
 
                     Train newTrain = new Train(id, columns[1], speed, operated, color);

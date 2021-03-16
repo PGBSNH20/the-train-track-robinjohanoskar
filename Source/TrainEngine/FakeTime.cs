@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using Newtonsoft.Json;
 using System.Threading;
 
 namespace TrainEngine
@@ -13,17 +9,17 @@ namespace TrainEngine
         public int Hours { get; set; }
         public int Minutes { get; set; }
         public Thread TimeThread { get; set; }
+        [JsonIgnore]
         public static int MinutesSinceStart;
 
-        public FakeTime(int h, int m)
+        public FakeTime(int hours, int minutes)
         {
             TickInterval = 100;
-            Hours = h;
-            Minutes = m;
-
+            Hours = hours;
+            Minutes = minutes;
         }
 
-        public string GetFormattedTimeString()
+        public override string ToString()
         {
             return Hours.ToString().PadLeft(2, '0') + ":" + Minutes.ToString().PadLeft(2, '0');
         }
@@ -36,8 +32,6 @@ namespace TrainEngine
 
         public void Tick()
         {
-             // Detta funkar om vi får klockan att starta när tåget börjar åka..
-
             Thread.Sleep(TickInterval);
             Minutes++;
             MinutesSinceStart++;
@@ -51,6 +45,8 @@ namespace TrainEngine
                 Hours = 0;
                 Minutes = 0;
             }
+
+            // todo print time in top left corner?
             //Console.WriteLine(Hours.ToString().PadLeft(2, '0') + ":" + Minutes.ToString().PadLeft(2, '0'));
             Tick();
         }

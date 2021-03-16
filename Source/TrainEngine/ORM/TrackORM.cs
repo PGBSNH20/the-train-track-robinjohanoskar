@@ -1,16 +1,15 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.IO;
 
 namespace TrainEngine.DataTypes
 {
-    public class Track
+    public class TrackORM
     {
         public static Crossing newCrossing { get; set; }
         public string[] FileLines { get; set; }
         public StationORM Station { get; }
 
-        public Track(string trackPath)
+        public TrackORM(string trackPath)
         {
             FileLines = File.ReadAllLines(trackPath);
         }
@@ -40,8 +39,6 @@ namespace TrainEngine.DataTypes
         
         public void SearchNext(int y, int x)
         {
-            //char c = TrackMap[y][x];
-
             for (x += 1; x < FileLines[y].Length; x++)
             {
                 char nextChar = FileLines[y][x];
@@ -49,7 +46,6 @@ namespace TrainEngine.DataTypes
                 if (Char.IsDigit(nextChar))
                 {
                     StationORM.Stations.Find(a => a.ID == int.Parse(nextChar.ToString())).Distance = distance;
-                    //TrackOrder.Add($"Station {nextChar}");
                     distance = 0;
                 }
                 else if (nextChar == '-')
