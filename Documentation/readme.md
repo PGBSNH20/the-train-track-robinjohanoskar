@@ -10,14 +10,13 @@ Saker vi har kvar att göra:
 2. ~~Räkna ut hur långt varje tåg har kommit vid varje Tick()~~
 3. Kolla distansen från stationen tåget är på jämfört emot distansen på nästa station och isåfall stanna tåget om den har åkt förbi
 4. Passagerare?
-5. 
-6. Spara ORMobjekt
-7. ~~Ladda travelplan~~
-8. Unit tests
-9. Level crossing & switches?
-10. Skapa upp filstruktur för ORM
-11. Spara järnvägen till travelplan.
-12. Städa koden.
+5. Spara ORMobjekt
+6. ~~Ladda travelplan~~
+7. Unit tests!!!
+8. ~~Level crossing~~
+9. (Skapa upp filstruktur för ORM)
+10. Spara järnvägen till travelplan!!!
+11. Städa koden.
 
 
 
