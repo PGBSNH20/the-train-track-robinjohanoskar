@@ -19,8 +19,6 @@ namespace TrainEngine
 
     public class TravelPlan : ITravelPlan
     {
-        public Train Train { get; set; }
-        public List<TimetableStop> Timetable { get; set; }
         private Thread _travelPlanThread;
         private FakeTime _fakeTime;
         private int _minutesSinceLastDeparture;
@@ -28,11 +26,16 @@ namespace TrainEngine
         private Station _nextStation;
         private bool _hasPassedCrossing;
 
+        public Train Train { get; set; }
+        public List<TimetableStop> Timetable { get; set; }
+        public List<Station> Stations { get; set; }
+
         public TravelPlan() { }
-        public TravelPlan(Train train, List<TimetableStop> timetable)
+        public TravelPlan(Train train, List<TimetableStop> timetable, List<Station> stations)
         {
             Train = train;
             Timetable = timetable;
+            Stations = stations;
         }
 
         public void Simulate(FakeTime fakeTime)
@@ -48,8 +51,7 @@ namespace TrainEngine
 
             foreach (TimetableStop stop in Timetable)
             {
-                // Get the station name from the static List "StationORM.Stations".
-                string stationName = StationORM.Stations.Find(station => station.ID == stop.StationId).Name;
+                string stationName = Stations.Find(station => station.ID == stop.StationId).Name;
 
                 // todo: operator overloading?
                 if (!stop.HasDeparted && stop.DepartureTime != null && stop.DepartureTime.Hours == _fakeTime.Hours && stop.DepartureTime.Minutes == _fakeTime.Minutes) {
@@ -64,7 +66,7 @@ namespace TrainEngine
                     if (i != -1 && i + 1 < Timetable.Count)
                     {
                         _nextStop = Timetable[i + 1];
-                        _nextStation = StationORM.Stations.Find(station => station.ID == _nextStop.StationId);
+                        _nextStation = Stations.Find(station => station.ID == _nextStop.StationId);
                     }
                 }
 
@@ -104,7 +106,7 @@ namespace TrainEngine
         // Save a travel plan (.json file) to disk.
         public void SavePlan()
         {
-            TravelPlanJson jsonTravelplan = new TravelPlanJson(StationORM.Stations, Timetable, this.Train);
+            TravelPlanJson jsonTravelplan = new TravelPlanJson(Stations, Timetable, this.Train);
 
             string json = JsonConvert.SerializeObject(jsonTravelplan);
 
@@ -119,9 +121,9 @@ namespace TrainEngine
                 JsonSerializer serializer = new JsonSerializer();
                 TravelPlanJson travelPlan = (TravelPlanJson)serializer.Deserialize(file, typeof(TravelPlanJson));
 
-                StationORM.Stations = travelPlan.Stations.ToList();
-                Timetable = travelPlan.Timetable.ToList();
                 Train = travelPlan.Train;
+                Timetable = travelPlan.Timetable.ToList();
+                Stations = travelPlan.Stations.ToList();
             }
         }
     }

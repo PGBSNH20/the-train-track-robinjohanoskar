@@ -31,9 +31,9 @@ namespace TrainEngine.Tests
 
             //Assert
             Assert.IsType<StationORM>(stationFile);
-            Assert.Equal(1, StationORM.Stations[0].ID);
-            Assert.Equal("Stonecro", StationORM.Stations[0].Name);
-            Assert.True(StationORM.Stations[0].EndStation);
+            Assert.Equal(1, stationFile.Stations[0].ID);
+            Assert.Equal("Stonecro", stationFile.Stations[0].Name);
+            Assert.True(stationFile.Stations[0].EndStation);
         }
 
         [Fact]
@@ -42,27 +42,29 @@ namespace TrainEngine.Tests
             //Arrange
             StationORM stationFile = new StationORM("Data/stations.txt");
             TrackORM track = new TrackORM("Data/traintrack2.txt");
-            track.ReadTrack();
+            track.ReadTrack(stationFile.Stations);
 
             //Assert
-            Assert.Equal(120, StationORM.Stations[1].Distance);
-            Assert.Equal(130, StationORM.Stations[2].Distance);
+            Assert.Equal(120, stationFile.Stations[1].Distance);
+            Assert.Equal(130, stationFile.Stations[2].Distance);
             Assert.Equal(40, TrackORM.newCrossing.Distance);
         }
 
         [Fact]
         public void Test_Save_TravelPlan()
         {
+            //Arrange
+            StationORM stationFile = new StationORM("Data/stations.txt");
             ScheduleORM scheduleFile = new ScheduleORM("Data/timetable.txt");
             TrainORM trainFile = new TrainORM("Data/trains.txt");
             new StationORM("Data/stations.txt");
             TrackORM newTrack = new TrackORM("Data/traintrack2.txt");
-            newTrack.ReadTrack();
-
+            newTrack.ReadTrack(stationFile.Stations);
             Train train = trainFile.Trains[1];
 
             // Create the travel plan and save it to file.
             new TrainPlanner(train)
+                .AddStations(stationFile.Stations)
                 .ReadSchedule(scheduleFile.Timetable.Where(stop => stop.TrainId == train.Id).ToList())
                 .GeneratePlan()
                 .SavePlan();
