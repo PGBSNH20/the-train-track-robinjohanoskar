@@ -47,7 +47,7 @@ namespace TrainConsole
 
 
             TravelPlan travelPlan1 = new TravelPlan();
-            travelPlan1.LoadPlan(@"C:\Temp\travelplan-train2.json");
+            travelPlan1.LoadPlan("travelplan-train2.json");
         }
     }
 }

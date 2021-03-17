@@ -116,13 +116,20 @@ namespace TrainEngine
 
             string json = JsonConvert.SerializeObject(jsonTravelplan);
 
-            File.WriteAllText(@$"C:\Temp\travelplan-train{Train.Id}.json", json);
+            var outputFolder = Path.Combine(Path.GetTempPath(), "the-train-track-robinjohanoskar");
+            if (!Directory.Exists(outputFolder)) {
+                Directory.CreateDirectory(outputFolder);
+            }
+
+            File.WriteAllText(Path.Combine(outputFolder, $"travelplan-train{Train.Id}.json"), json);
         }
 
         // Load a travel plan (.json file) from disk.
-        public void LoadPlan(string jsonPath)
+        public void LoadPlan(string fileName)
         {
-            using (StreamReader file = File.OpenText(jsonPath))
+            var outputFolder = Path.Combine(Path.GetTempPath(), "the-train-track-robinjohanoskar");
+
+            using (StreamReader file = File.OpenText(Path.Combine(outputFolder, fileName)))
             {
                 JsonSerializer serializer = new JsonSerializer();
                 TravelPlanJson travelPlan = (TravelPlanJson)serializer.Deserialize(file, typeof(TravelPlanJson));
