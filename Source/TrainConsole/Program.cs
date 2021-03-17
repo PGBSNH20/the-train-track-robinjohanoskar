@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using TrainEngine;
 using TrainEngine.DataTypes;
 
@@ -8,6 +9,7 @@ namespace TrainConsole
     {
         static void Main(string[] args)
         {
+            Console.CursorVisible = false;
             TimetableORM timetableFile = new TimetableORM("Data/timetable.txt");
             TrainORM trainFile = new TrainORM("Data/trains.txt");
             StationORM stationFile = new StationORM("Data/stations.txt");

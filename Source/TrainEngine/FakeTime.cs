@@ -1,4 +1,5 @@
 ﻿using Newtonsoft.Json;
+using System;
 using System.Threading;
 
 namespace TrainEngine
@@ -16,7 +17,7 @@ namespace TrainEngine
 
         public FakeTime(int hours, int minutes)
         {
-            TickInterval = 10;
+            TickInterval = 50;
             Hours = hours;
             Minutes = minutes;
         }
@@ -37,6 +38,7 @@ namespace TrainEngine
         {
             if (!_threadRunning)
             {
+                Console.CursorVisible = true;
                 return;
             }
 
@@ -55,8 +57,10 @@ namespace TrainEngine
                 _threadRunning = false;
             }
 
-            // todo print time in top left corner?
-            //Console.WriteLine(Hours.ToString().PadLeft(2, '0') + ":" + Minutes.ToString().PadLeft(2, '0'));
+            (int y, int x) = (Console.CursorTop, Console.CursorLeft);
+            Console.SetCursorPosition(Console.BufferWidth - 5, 0);
+            Console.WriteLine(ToString());
+            Console.SetCursorPosition(x, y);
             Tick();
         }
     }
